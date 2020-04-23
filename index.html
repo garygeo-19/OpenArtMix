@@ -1,0 +1,476 @@
+<html>
+
+<head>
+
+	<link rel="stylesheet" href="StyleSheet.css">
+	<!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>-->
+	<script src="libraries/jquery.js"></script>
+
+	<script>
+		var dragged;
+		/* events fired on the draggable target */
+		document.addEventListener("drag", function (event) {
+
+		}, false);
+
+		document.addEventListener("dragstart", function (event) {
+			// store a ref. on the dragged elem
+			dragged = event.target;
+			// make it half transparent
+			event.target.style.opacity = .5;
+		}, false);
+
+		document.addEventListener("dragend", function (event) {
+			// reset the transparency
+			event.target.style.opacity = "";
+		}, false);
+
+		/* events fired on the drop targets */
+		document.addEventListener("dragover", function (event) {
+			// prevent default to allow drop
+			event.preventDefault();
+		}, false);
+
+		document.addEventListener("dragenter", function (event) {
+			// highlight potential drop target when the draggable element enters it
+			if (event.target.className == "dropzone") {
+				event.target.style.background = "lightblue";
+			}
+
+		}, false);
+
+		document.addEventListener("dragleave", function (event) {
+			// reset background of potential drop target when the draggable element leaves it
+			if (event.target.className == "dropzone") {
+				event.target.style.background = "";
+			}
+
+		}, false);
+
+
+
+
+		document.addEventListener("drop", function (event) {
+			// prevent default action (open as link for some elements)
+			event.preventDefault();
+			// move dragged elem to the selected drop target
+			if (event.target.className == "dropzone") {
+				event.target.style.background = "";
+				event.target.style = "outline: 2px solid grey;";
+
+				var nodeCopy = dragged.cloneNode(true);
+				var widgetId = event.target.id;
+				//	nodeCopy.id = "widgetDropZone"; // + widgetId; /* We cannot use the same ID */
+				nodeCopy.style.opacity = "";
+				nodeCopy.style.display = "inline-block"; ///for a horizontal layout when dropped
+				//remove as we want to keep--	dragged.parentNode.removeChild(dragged);
+
+				var frameHolder = event.target.querySelector('.frameholder');
+				console.log(frameHolder.children);
+
+				if (frameHolder.children.length > 0) {
+					alert("Remove Existing Widget or Add a New Section");
+				} else {
+					event.target.querySelector('.frameHolder').appendChild(nodeCopy)
+					addWidget(event, dragged);
+				}
+			}
+		}, false);
+
+
+		function addWidget(e, d) {
+			/*
+			3 edits need to add a widget:
+			1. Create the files in the "add_in" directory
+			2. Add the draggable to the html
+			3.  Add the entry in the case statement */
+
+			var frameSrc; // stores location of iframe
+
+			switch (d.id) {
+				case "uploadImage":
+					frameSrc = "/add_ins/image_upload/image_upload.html"
+					callFrame(frameSrc, e.target);
+					break;
+				case "fabricjsEditImage":
+					frameSrc = "/add_ins/fabricjs_edit/fabricjs_edit.html"
+					callFrame(frameSrc, e.target);
+					break;
+				case "p5jsKaleidoscope":
+					frameSrc = "/add_ins/p5js_kaleidoscope/p5js_kaleidoscope.html"
+					callFrame(frameSrc, e.target);
+					break;
+				case "p5jsRiso":
+					frameSrc = "/add_ins/p5js_rgb_riso/p5js_rgb_riso.html"
+					callFrame(frameSrc, e.target);
+					break;
+				case "exportImage":
+					frameSrc = "/add_ins/image_export/image_export.html"
+					callFrame(frameSrc, e.target);
+					break;
+				default:
+					alert(d.id + " not found");
+			}
+
+		}
+
+		function callFrame(fSrc, eTarget) {
+			console.log("imageToFrame Called");
+			var contentDiv = eTarget.querySelector('.frameholder'); //.appendChild(nodeCopy)
+			//create frame
+			var addFrame = document.createElement('iframe');
+			addFrame.className = 'frameClass';
+			addFrame.width = '100%';
+			addFrame.scrolling = 'no'; //to prevent scrolling in the content which makes navigation more difficut.
+			addFrame.seamless = "seamless"
+			//	addFrame.height = '520px'; //hard coding as adjusting is not working
+			var frameID = "canvasFrame-" + eTarget.id; //"canvasFrame"; //
+			addFrame.id = frameID;
+			addFrame.src = fSrc;
+			contentDiv.appendChild(addFrame);
+			addButtonHolder(contentDiv)
+			sectionSystem();
+
+		}
+
+		function frameLoaded(seq) { //when the add sketch frame is loaded
+			//create canvas output
+
+			var sourceCanvas = document.getElementById('copyCanvas');
+			var iframe = document.getElementById("canvasFrame-" + seq);
+			var iframedoc = iframe.contentWindow.document;
+			var destinationCanvas = iframedoc.getElementById('widgetImportCanvas');
+			var destCtx = destinationCanvas.getContext('2d');
+			console.log("Source:")
+			console.log(sourceCanvas);
+			console.log("Destination:")
+			console.log(destinationCanvas)
+			destCtx.drawImage(sourceCanvas, 0, 0, 500, 500 * sourceCanvas.height / sourceCanvas.width);
+
+			var image = new Image();
+			image.src = sourceCanvas.toDataURL("image/png");
+			var destinationImage = iframedoc.getElementById('widgetImportImage')
+			destinationImage.src = image.src;
+		}
+
+		window.addEventListener("message", receiver, false);
+
+		function receiver(event) {
+			//getting updateSize from iframes
+			console.log("message received");
+
+			setTimeout(() => {
+				resizeIframe()
+			}, 100); //should try to remove this.
+			//	resizeIframe();
+
+
+		}
+
+		function resizeIframe() {
+			//from this example: http://plnkr.co/edit/9FszsTd2VAq8AdNEl6cv?p=preview
+			//console.log("iframe resize called");
+			var iframes = $(".frameClass"); // $(".my-iframe"); /Edited
+			console.log(iframes.length);
+			$.each(iframes, function () { //currently readjusting all iframes at once.
+
+				//	console.log(e.type, this)
+				var h = this.contentWindow.document.body.scrollHeight
+				var w = this.contentWindow.document.body.scrollWidth
+				$(this).css({
+					height: "",
+					width: ""
+				})
+				var h1 = this.contentWindow.document.body.scrollHeight
+				var w1 = this.contentWindow.document.body.scrollWidth
+				$(this).css({
+					height: h,
+					width: w
+				}).animate({
+					height: h1,
+					width: w1
+				}, 300, function () {
+					//console.log(["animated", h, w, h1, w1])
+					//parent.$ && parent.$('iframe').trigger('reload');
+				})
+
+			});
+		}
+		var sequence = 0;
+
+
+		function sectionSystem() {
+			//set up a section array... always one at the top, at the bottom and between.
+			console.log("sectionSystem");
+			//console.log(eT);
+			let systemLocation = document.getElementById("c2");
+			let nList = systemLocation.childNodes;
+			nListLength = nList.length;
+			console.log(nListLength)
+			if (nListLength == 0) {
+				//if no sections exist create one
+				//console.log("No Sections");
+				systemLocation.appendChild(createSection());
+				//	return;
+			} else {
+
+				for (let n = 0; n < nList.length; n++) { //look at all the sections
+					console.log(nList[n].childNodes[1].hasChildNodes()); //determine if the section frameholder has content
+					//if first node has content add a new node at the beginning
+					if (n == 0 & nList[n].childNodes[1]
+						.hasChildNodes()) { //if the first node has content we should add a new empty first node
+						systemLocation.insertBefore(createSection(), nList[n]);
+						sectionSystem();
+						//	return;
+					}
+					//only one consecutive empty
+					if (n > 0) {
+						if (nList[n - 1].childNodes[1].hasChildNodes() == false && nList[n].childNodes[1].hasChildNodes() ==
+							false) { //2 empty in a row, remove 1
+							console.log("2 empty in a row, remove 1");
+							systemLocation.removeChild(nList[n - 1]);
+							sectionSystem();
+							//	return;
+						}
+						//only one consecutive with content
+						if (nList[n - 1].childNodes[1].hasChildNodes() == true && nList[n].childNodes[1].hasChildNodes() ==
+							true) { //if the first node has content we should add a new empty first node
+							console.log("add empty first node");
+							systemLocation.insertBefore(createSection(), nList[n]);
+							sectionSystem();
+							//	return;
+						}
+						//last section should be empty
+						if (n + 1 == nListLength && nList[n].childNodes[1].hasChildNodes() ==
+							true) {
+							console.log("last section should be empty")
+							systemLocation.appendChild(createSection());
+							sectionSystem();
+							//	return;
+						}
+					} //end greater than zero if
+				} //end for
+			} //end else
+		} // end function
+
+		function createSection() {
+
+			sequence++; //TODO: it is not generating fast enough. may need to convert to a guid. to help identify different iframes and elements
+			//	console.log(nList);
+			var sectionDiv = document.createElement("div");
+			sectionDiv.className = "dropzone";
+			sectionDiv.id = sequence;
+			//
+
+			var idLabel = document.createElement("div");
+			//idLabel.innerHTML = "[" + sequence + "]";
+			idLabel.className = "label";
+			sectionDiv.appendChild(idLabel);
+
+			var frameHolder = document.createElement("div");
+			frameHolder.className = "frameholder";
+			sectionDiv.appendChild(frameHolder);
+			return sectionDiv;
+		}
+
+		function addButtonHolder(t) {
+			var buttonHolder = document.createElement("div");
+			buttonHolder.className = "buttonholder";
+			t.appendChild(buttonHolder);
+
+			//trying without collapsible
+			//	var collapsibleButton = document.createElement("div");
+			//	collapsibleButton.innerHTML = "Collapse";
+			//	collapsibleButton.className = "collapsible";
+			//	buttonHolder.appendChild(collapsibleButton);
+
+			var removeButton = document.createElement("div");
+			removeButton.innerHTML = "Clear";
+			removeButton.className = "collapsible";
+			removeButton.addEventListener("click", function (event) {
+				console.log("remove button pressed")
+				removeWidget(event);
+			}, false);
+			buttonHolder.appendChild(removeButton);
+
+			var transferButton = document.createElement("div");
+			transferButton.innerHTML = "Transfer";
+			transferButton.className = "collapsible";
+			buttonHolder.appendChild(transferButton);
+
+			var currentSequence = sequence;
+			//trasfer image
+
+			transferButton.addEventListener("click", function (event) {
+				console.log("transfer location: " + currentSequence)
+				transferCanvas(event);
+			}, false);
+
+			/*   Remove Added section button and do it automatically when new dragables are added
+						var sectionButton = document.createElement("div");
+						sectionButton.innerHTML = "+Section";
+						sectionButton.className = "collapsible";
+						sectionButton.addEventListener("click", function (event) {
+							console.log("section button pressed")
+							//	removeWidget(event);
+							sectionSystem();
+						}, false);
+						buttonHolder.appendChild(sectionButton);
+				*/
+		}
+
+
+		function removeWidget(e) {
+			var frameHolder = e.target.parentElement.parentElement; //.querySelector('.frameholder');
+			console.log(e.target.parentElement.parentElement)
+			while (frameHolder.firstChild) {
+				frameHolder.removeChild(frameHolder.firstChild);
+			}
+			sectionSystem(); //clean up sections
+			//	var buttonHolderRemove = e.target.parentElement.querySelector('.buttonholder');
+			//	buttonHolderRemove.remove();
+		}
+
+		function transferCanvas(e) {
+
+			///gather source canvas
+			console.log(e.target.parentElement.parentElement); //frameholder
+			var sourceIframe = e.target.parentElement.parentElement.getElementsByTagName(
+				"iframe")[0]; // document.getElementById("frame-" + seq);
+			console.log("sourceIframe:");
+			console.log(sourceIframe);
+			var sourceIframeDoc = sourceIframe.contentWindow.document;
+			var sourceCanvas = sourceIframeDoc.getElementById("frameCanvasOut");
+			console.log(sourceCanvas)
+
+			//target canvas based on what is next in sequence
+			let destinationIframe = e.target.parentElement.parentElement.parentElement.nextSibling.nextSibling
+				.getElementsByTagName(
+					"iframe")[0];
+
+			//	var destinationIframe = document.getElementById("canvasFrame-" + (seq + 1));
+			console.log("destinationIframe:");
+			console.log(destinationIframe);
+			var destinationIframeDoc = destinationIframe.contentWindow.document;
+			var destinationCanvas = destinationIframeDoc.getElementById("frameCanvasIn");
+			//	var destinationCanvas2 = destinationIframeDoc.getElementById("frameCanvasOut");
+			//console.log(destinationCanvas)
+			if (destinationCanvas && sourceCanvas) { //&& destinationCanvas2
+				let dWidth = 500;
+				let dHeight = sourceCanvas.height / sourceCanvas.width * dWidth;
+				destinationCanvas.width = dWidth;
+				destinationCanvas.height = dHeight;
+				//	destinationCanvas2.width = dWidth;
+				//	destinationCanvas2.height = dHeight;
+				console.log("transfer started");
+				//grab the context from your destination canvas
+				var destCtx1 = destinationCanvas.getContext('2d');
+				//	var destCtx2 = destinationCanvas2.getContext('2d');
+				//destCtx.width = 500;
+				//	destCtx.height = 500 * sourceCanvas.height / sourceCanvas.width;
+				//call its drawImage() function passing it the source canvas directly
+				destCtx1.clearRect(0, 0, 500, 500); //remove the previous pixels
+				//		destCtx2.clearRect(0, 0, 500, 500);
+
+				destCtx1.drawImage(sourceCanvas, 0, 0, dWidth, dHeight);
+				//		destCtx2.drawImage(sourceCanvas, 0, 0, dWidth, dHeight);
+
+				destinationIframe.contentWindow.postMessage(500 * sourceCanvas.height / sourceCanvas.width);
+			} else {
+				if (sourceCanvas == null) {
+					alert("Source Canvas Not Available");
+				}
+				if (destinationCanvas == null) {
+					alert("Destination Canvas Not Available");
+				}
+				//	if (destinationCanvas2 == null) {
+				//		alert("Destination Canvas(2) Not Available");
+				//	}
+			}
+
+			//adjust the frame size
+			//destinationIframe.height = destinationIframe.contentWindow.document.body.scrollHeight;
+			resizeIframe();
+		}
+
+
+
+		function setCollapsible(coll) {
+			/* 			//	var coll = document.getElementsByClassName("collapsible");
+						var i;
+						coll.addEventListener("click", function () {
+							this.classList.toggle("active");
+							var content = this.parentElement.parentElement.querySelector('iframe');
+							//console.log("content");
+							//	console.log(content);
+
+							if (content.style.display === "block" ||
+								content.style.display === "") {
+								content.style.display = "none";
+								coll.innerHTML = "Expand";
+							} else {
+								content.style.display = "block";
+								coll.innerHTML = "Collapse";
+							}
+						}); */
+			//	}
+		}
+	</script>
+
+
+</head>
+
+<body onload="sectionSystem()" id="pageMain">
+	<div class="container">
+		<div class="header">
+			<h1>Art Mixer</h1>
+
+		</div>
+		<div class="content">
+			<div class="wrapper">
+				<div class="leftContent" id="c1">
+					<!--<p>this will scroll</p>-->
+					<i>Select and Drag a Widget</i>
+					<hr>
+					<H3>Add Image</H3>
+					<div class="buffer">
+						<div id="uploadImage" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Upload Image
+								<span class="tooltiptext">Uploads an Image</span>
+							</div>
+						</div>
+						<H3>Edit Image</H3>
+						<div id="fabricjsEditImage" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Edit Image
+								<span class="tooltiptext"> based on paperjs demo</span>
+							</div>
+						</div>
+						<div id="p5jsKaleidoscope" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Kaleidoscope
+								<span class="tooltiptext"> based on a p5js sketch
+									https://www.openprocessing.org/sketch/868626</span>
+							</div>
+						</div>
+						<div id="p5jsRiso" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Riso Colorer
+								<span class="tooltiptext"> based on the P5JS Riso Library</span>
+							</div>
+						</div>
+						<H3>Export Image</H3>
+						<div id="exportImage" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							Export Image
+						</div>
+					</div>
+				</div>
+				<div class="rightContent" id="c2"></div>
+			</div>
+		</div>
+
+</body>
+
+</html>

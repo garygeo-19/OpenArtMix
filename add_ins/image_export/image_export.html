@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <script>
+        function download() {
+            var download = document.getElementById("download");
+            var image = document.getElementById("frameCanvasOut").toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+            download.setAttribute("href", image);
+            //download.setAttribute("download","archive.png");
+        }
+    </script>
+    <script>
+        //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
+        window.addEventListener("message", receiver, false);
+
+        function receiver(message) {
+            console.log("Message Received");
+            parent.postMessage('updateSize');
+            //need to make sure both the CanvasIn and CanvasOut have the image just in case.
+            //copy canvas
+            let targetCanvas = document.getElementById('frameCanvasOut');
+            let targetContext = targetCanvas.getContext('2d');
+            let sourceCanvas = document.getElementById('frameCanvasIn');
+            //set dimensions
+            targetCanvas.width = sourceCanvas.width;
+            targetCanvas.height = sourceCanvas.height;
+            //apply the old canvas to the new one
+            targetContext.drawImage(sourceCanvas, 0, 0);
+
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="frameCanvasIn" width="500" height="500" style='display:none'></canvas>
+    <canvas id="frameCanvasOut" width="500" height="500"></canvas>
+    <hr>
+    <a id="download" download="artmix.png">
+        <button type="button" onClick="download()">Download</button>
+    </a>
+    <br>
+    <br>
+</body>

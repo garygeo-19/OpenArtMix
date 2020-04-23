@@ -1,0 +1,210 @@
+.draggable {
+    width: 200px;
+    text-align: center;
+    background: #3E78AD;
+    padding: 5px;
+    margin: 3px;
+    cursor: grab;
+    /*  outline: 1px solid black; */
+    border-radius: 5px;
+
+}
+
+.dropzone {
+    width: 98%;
+    /*  background: rgb(184, 210, 228); */
+    margin: 5px;
+    padding: 2px;
+    display: inline-block;
+    outline: 2px dashed #3BA380;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Trebuchet MS, sans-serif;
+}
+
+html,
+
+
+
+body,
+.container {
+    height: 100%;
+}
+
+.container:before {
+    content: '';
+    height: 99%;
+    float: left;
+}
+
+
+
+.header {
+    margin-bottom: 5px;
+    padding: 3px;
+    background-color: #3E78AD;
+    color: #c5cbd6;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+}
+
+.content:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.frameconent {
+    height: 100%;
+}
+
+.leftContent {
+    background-color: white;
+    float: left;
+    margin: 3px;
+    padding: 3px;
+
+}
+
+.rightContent {
+    /*  background-color: rgb(209, 198, 238);  */
+    overflow: auto;
+    height: 100%;
+    overflow-x: hidden;
+    outline: 2px solid black;
+}
+
+.collapsible {
+    background-color: #3E78AD;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    width: 55px;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    display: inline-block;
+    outline: 1px solid black;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #3EADA8;
+}
+
+
+
+.butt:hover {
+    background-color: blue;
+    color: white;
+}
+
+.frameholder {
+    padding: 3px;
+    display: inline-block;
+    margin: 3px;
+    width: 100%;
+}
+
+.label {
+
+    vertical-align: top;
+    color: black;
+    cursor: default;
+    padding: 5px;
+    width: 20px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    display: inline-block;
+}
+
+iframe {
+    border: 0px rgb(202, 201, 201) solid;
+    /*  width: 98%;
+    margin: 5px;
+    padding: 2px; 
+*/
+
+
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    /*  border-bottom: 1px dotted black;
+     If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #3E76AD;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: -100%;
+    left: 100%;
+    margin-left: 60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+html,
+body,
+label,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Trebuchet MS, sans-serif;
+}
