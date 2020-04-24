@@ -34,7 +34,7 @@ var cyclic_t;
   Let's load the example images first.
 */
 function preload() {
-  img = loadImage("Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
+  img = loadImage("/assets/Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
   refreshNeeded = false;
   parent.postMessage('updateSize'); //update the framesize
 
@@ -263,6 +263,6 @@ function loadCanvasImage() {
   loadImage(importCanvas.toDataURL('image/png'), function (loadedImage) {
     img = loadedImage;
     console.log("loadCanvas Ended");
-    init();
+
   });
 }

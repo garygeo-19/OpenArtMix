@@ -92,6 +92,14 @@
 					frameSrc = "/add_ins/image_upload/image_upload.html"
 					callFrame(frameSrc, e.target);
 					break;
+				case "webcamCapture":
+					frameSrc = "/add_ins/webcam_capture/webcam_capture.html"
+					callFrame(frameSrc, e.target);
+					break;
+				case "asciiArt":
+					frameSrc = "/add_ins/ascii_art/ascii_art.html"
+					callFrame(frameSrc, e.target);
+					break;
 				case "fabricjsEditImage":
 					frameSrc = "/add_ins/fabricjs_edit/fabricjs_edit.html"
 					callFrame(frameSrc, e.target);
@@ -440,7 +448,19 @@
 								<span class="tooltiptext">Uploads an Image</span>
 							</div>
 						</div>
-						<H3>Edit Image</H3>
+						<div id="webcamCapture" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Web Cam Capture
+								<span class="tooltiptext">Captures Image from Web Cam</span>
+							</div>
+						</div>
+						<H3>Modify Image</H3>
+						<div id="asciiArt" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">ASCII Art
+								<span class="tooltiptext"> based on P5JS Ascii Art Demo</span>
+							</div>
+						</div>
 						<div id="fabricjsEditImage" class="draggable" draggable="true"
 							ondragstart="event.dataTransfer.setData('text/plain',null)">
 							<div class="tooltip">Edit Image
