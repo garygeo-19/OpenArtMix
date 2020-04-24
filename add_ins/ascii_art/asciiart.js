@@ -34,6 +34,11 @@ var cyclic_t;
   Let's load the example images first.
 */
 function preload() {
+  img = loadImage("Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
+  refreshNeeded = false;
+  parent.postMessage('updateSize'); //update the framesize
+
+
   // "Young man reading by candlelight", Matthias Stom, 1600-1650
   images[0] =
     loadImage('/assets/BeautifulDay.jpg');
@@ -46,7 +51,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640, 480); // we need some space...
+
+  cnv = createCanvas(640, 480);
+  cnv.id('frameCanvasOut');
+  // createCanvas(640, 480); // we need some space...
   /*
     In this particular case the gfx helper should have dimensions the same as
     the target graphic.
@@ -247,4 +255,14 @@ typeArray2d = function (_arr2d, _dst, _x, _y, _w, _h) {
         offset_x + temp_x * dist_hor,
         offset_y + temp_y * dist_ver
       );
+}
+
+function loadCanvasImage() {
+  console.log("loadCanvas Started");
+  let importCanvas = document.getElementById("frameCanvasIn");
+  loadImage(importCanvas.toDataURL('image/png'), function (loadedImage) {
+    img = loadedImage;
+    console.log("loadCanvas Ended");
+    init();
+  });
 }

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASCII Art example</title>
+  <title>ASCII Art</title>
   <style>
     body {
       padding: 0;
@@ -16,9 +16,26 @@
   <script src="/libraries/p5.dom.js"></script>
   <script src="p5.asciiart.min.js"></script>
   <script src="asciiart.js"></script>
+  <script>
+    //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
+    window.addEventListener("message", receiver, false);
+
+    function receiver(message) {
+      console.log("Message Received");
+      // setTimeout(() => { //waiting for canvas to load
+      refreshNeeded = true;
+      // }, 1); //should try to remove this.
+
+
+      parent.postMessage('updateSize');
+    }
+  </script>
 </head>
 
 <body>
+
+  <canvas id="frameCanvasIn" width="500" height="500" style='display:none'>
+
 </body>
 
 </html>

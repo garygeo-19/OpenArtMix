@@ -12,7 +12,6 @@ let imageY = 0;
 function preload() {
     img = loadImage("Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
     refreshNeeded = false;
-
     parent.postMessage('updateSize'); //update the framesize
 }
 
@@ -132,7 +131,6 @@ function drawHexa(cx, cy, triGra = gra, radius = gra.width) {
     }
     pop();
 }
-
 
 function loadCanvasImage() {
     console.log("loadCanvas Started");
