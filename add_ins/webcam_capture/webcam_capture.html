@@ -15,11 +15,6 @@
 
         function receiver(message) {
             console.log("Message Received");
-            // setTimeout(() => { //waiting for canvas to load
-            refreshNeeded = true;
-            // }, 1); //should try to remove this.
-
-
             parent.postMessage('updateSize');
         }
     </script>
