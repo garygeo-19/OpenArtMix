@@ -1,6 +1,9 @@
 let img;
 let cnv;
 let graphics;
+let sites = 500; //the number of sites will determine the size
+let diagram;
+let strokeWeightValue = 0;
 
 function preload() {
     img = loadImage("Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
@@ -9,8 +12,22 @@ function preload() {
 }
 
 function setup() {
+
+
+    createElement('label', 'Size:');
+    let sizeSlider = createSlider(10, 3000, 500, 10);
+    sizeSlider.input(function () {
+        //  console.log(sites);
+        for (let i = 0; i < sites; i++) {
+            voronoiRemoveSite(i); //remove the old sites
+        }
+        sites = sizeSlider.value();
+        generateVoronoi();
+    });
+    createElement('br');
     cnv = createCanvas(500, 500);
     cnv.id('frameCanvasOut');
+    image(img, 0, 0, 500, 500);
 
     angleMode(DEGREES);
     //colorMode(HSB, 360, 100, 100, 100);
@@ -26,23 +43,25 @@ function setup() {
     //サイトの描画ON/OFF
     voronoiSiteFlag(true);
 
+
     graphics = createGraphics(width, height);
     graphics.colorMode(HSB, 360, 100, 100, 100);
+    //gg:not clear to me what this section of orginal code was doing... maybe smoothing by creating elipses
 
-    let percent = 5 / 100;
-    let radius = sqrt(sq(width / 2) + sq(height / 2));
-    for (let i = 0; i < width * height * percent; i++) {
-        let angle = random(360);
-        let r = 1 - (random(random(1)));
-        let x = width / 2 + r * radius * cos(angle);
-        let y = height / 2 + r * radius * sin(angle);
-        let w = random(3);
-        let h = random(3);
-        graphics.fill(0, 0, 100, 8);
-        graphics.noStroke();
-        graphics.ellipse(x, y, w, h);
-    }
-    generateVoronoi();
+    // let percent = 5 / 100;
+    // let radius = sqrt(sq(width / 2) + sq(height / 2));
+    // for (let i = 0; i < width * height * percent; i++) {
+    //     let angle = random(360);
+    //     let r = 1 - (random(random(1)));
+    //     let x = width / 2 + r * radius * cos(angle);
+    //     let y = height / 2 + r * radius * sin(angle);
+    //     let w = random(3);
+    //     let h = random(3);
+    //     graphics.fill(0, 0, 100, 8);
+    //     graphics.noStroke();
+    //     graphics.ellipse(x, y, w, h);
+    // }
+
 }
 
 function draw() {
@@ -57,28 +76,29 @@ function mousePressed() {
 
 
 function generateVoronoi() {
+
     background(150);
 
     //ランダムなサイトを100個，最短距離50の条件で生成する
-    voronoiRndSites(1000, 0);
+    voronoiRndSites(sites, 0);
 
     //ボロノイ図の計算，幅高さ，ジッター生成のON/OFF
     voronoi(width, height, false);
 
-
     //生成したボロノイ図の詳細をvoronoiGetDiagramでオブジェクトとして取得
     //自作で描画プログラムなどを作る場合は利用できそう
     //https://github.com/gorhill/Javascript-Voronoi
-    let diagram = voronoiGetDiagram();
+    diagram = voronoiGetDiagram();
     //print(diagram);
 
     let normal = voronoiGetCells();
-
+    strokeWeight(strokeWeightValue);
     for (let i = 0; i < diagram.cells.length; i++) {
         let site = diagram.cells[i].site;
         let c = img.get(site.x, site.y);
         fill(c);
-        noStroke();
+        //  noStroke();
+
         beginShape();
         for (let p of normal[i]) {
             vertex(p[0], p[1]);
