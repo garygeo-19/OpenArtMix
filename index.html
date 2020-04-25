@@ -112,6 +112,10 @@
 					frameSrc = "/add_ins/p5js_rgb_riso/p5js_rgb_riso.html"
 					callFrame(frameSrc, e.target);
 					break;
+				case "voronoi":
+					frameSrc = "/add_ins/voronoi/voronoi.html"
+					callFrame(frameSrc, e.target);
+					break;
 				case "exportImage":
 					frameSrc = "/add_ins/image_export/image_export.html"
 					callFrame(frameSrc, e.target);
@@ -478,6 +482,13 @@
 							ondragstart="event.dataTransfer.setData('text/plain',null)">
 							<div class="tooltip">Riso Colorer
 								<span class="tooltiptext"> based on the P5JS Riso Library</span>
+							</div>
+						</div>
+						<div id="voronoi" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Voronoi
+								<span class="tooltiptext"> based on a sketch by takawo:
+									https://www.openprocessing.org/sketch/773439</span>
 							</div>
 						</div>
 						<H3>Export Image</H3>

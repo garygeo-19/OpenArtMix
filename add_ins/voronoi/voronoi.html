@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/stylesheet.css">
     <script src="/libraries/p5.js"></script>
     <script src="/libraries/p5.dom.js"></script>
-    <script src="p5js_kaleidoscope.js"></script>
+    <script src="rhill-voronoi-core.js"></script>
+    <script src="p5voronoimin.js"></script>
+    <script src="voronoi.js"></script>
 
     <script>
         //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
@@ -16,11 +18,7 @@
 
         function receiver(message) {
             console.log("Message Received");
-            // setTimeout(() => { //waiting for canvas to load
             refreshNeeded = true;
-            // }, 1); //should try to remove this.
-
-
             parent.postMessage('updateSize');
         }
     </script>
