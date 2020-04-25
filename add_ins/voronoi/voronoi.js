@@ -92,6 +92,9 @@ function generateVoronoi() {
 function loadCanvasImage() {
     console.log("loadCanvas Started");
     let importCanvas = document.getElementById("frameCanvasIn");
+    //create new correctly sized canvas
+    cnv = createCanvas(importCanvas.width, importCanvas.height);
+    cnv.id('frameCanvasOut');
     loadImage(importCanvas.toDataURL('image/png'), function (loadedImage) {
         img = loadedImage;
         console.log("loadCanvas Ended");
