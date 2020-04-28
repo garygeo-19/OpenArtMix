@@ -8,13 +8,13 @@ let strokeWeightValue = 0;
 function preload() {
     img = loadImage("Transfer-an-Image.png"); //loadImage('/assets/BikeRiders.jpg');
     refreshNeeded = false;
-    parent.postMessage('updateSize'); //update the framesize
+    //  parent.postMessage('updateSize'); //update the framesize
 }
 
 function setup() {
 
 
-    createElement('label', 'Size:');
+    createElement('label', 'Areas:');
     let sizeSlider = createSlider(10, 3000, 500, 10);
     sizeSlider.input(function () {
         //  console.log(sites);
@@ -28,7 +28,7 @@ function setup() {
     cnv = createCanvas(500, 500);
     cnv.id('frameCanvasOut');
     image(img, 0, 0, 500, 500);
-
+    parent.postMessage('updateSize');
     angleMode(DEGREES);
     //colorMode(HSB, 360, 100, 100, 100);
 
@@ -120,5 +120,6 @@ function loadCanvasImage() {
         console.log("loadCanvas Ended");
         generateVoronoi();
         refreshNeeded = false;
+        parent.postMessage('updateSize');
     });
 }

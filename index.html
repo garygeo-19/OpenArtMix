@@ -3,7 +3,7 @@
 <head>
 
 	<link rel="stylesheet" href="StyleSheet.css">
-	<!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>-->
+	<!-- required for resize function (iframe_resize.js) -->
 	<script src="libraries/jquery.js"></script>
 
 	<script>
@@ -116,6 +116,10 @@
 					frameSrc = "/add_ins/voronoi/voronoi.html"
 					callFrame(frameSrc, e.target);
 					break;
+				case "lineArt":
+					frameSrc = "/add_ins/line_art/line_art.html"
+					callFrame(frameSrc, e.target);
+					break;
 				case "exportImage":
 					frameSrc = "/add_ins/image_export/image_export.html"
 					callFrame(frameSrc, e.target);
@@ -143,6 +147,7 @@
 			addButtonHolder(contentDiv)
 			sectionSystem();
 
+
 		}
 
 		function frameLoaded(seq) { //when the add sketch frame is loaded
@@ -163,6 +168,7 @@
 			image.src = sourceCanvas.toDataURL("image/png");
 			var destinationImage = iframedoc.getElementById('widgetImportImage')
 			destinationImage.src = image.src;
+
 		}
 
 		window.addEventListener("message", receiver, false);
@@ -173,7 +179,7 @@
 
 			setTimeout(() => {
 				resizeIframe()
-			}, 100); //should try to remove this.
+			}, 10); //should try to remove this.
 			//	resizeIframe();
 
 
@@ -227,7 +233,7 @@
 			} else {
 
 				for (let n = 0; n < nList.length; n++) { //look at all the sections
-					console.log(nList[n].childNodes[1].hasChildNodes()); //determine if the section frameholder has content
+					//	console.log(nList[n].childNodes[1].hasChildNodes()); //determine if the section frameholder has content
 					//if first node has content add a new node at the beginning
 					if (n == 0 & nList[n].childNodes[1]
 						.hasChildNodes()) { //if the first node has content we should add a new empty first node
@@ -365,29 +371,24 @@
 			console.log(destinationIframe);
 			var destinationIframeDoc = destinationIframe.contentWindow.document;
 			var destinationCanvas = destinationIframeDoc.getElementById("frameCanvasIn");
-			//	var destinationCanvas2 = destinationIframeDoc.getElementById("frameCanvasOut");
+
 			//console.log(destinationCanvas)
 			if (destinationCanvas && sourceCanvas) { //&& destinationCanvas2
 				let dWidth = 500;
 				let dHeight = sourceCanvas.height / sourceCanvas.width * dWidth;
 				destinationCanvas.width = dWidth;
 				destinationCanvas.height = dHeight;
-				//	destinationCanvas2.width = dWidth;
-				//	destinationCanvas2.height = dHeight;
 				console.log("transfer started");
 				//grab the context from your destination canvas
 				var destCtx1 = destinationCanvas.getContext('2d');
-				//	var destCtx2 = destinationCanvas2.getContext('2d');
-				//destCtx.width = 500;
-				//	destCtx.height = 500 * sourceCanvas.height / sourceCanvas.width;
-				//call its drawImage() function passing it the source canvas directly
 				destCtx1.clearRect(0, 0, 500, 500); //remove the previous pixels
-				//		destCtx2.clearRect(0, 0, 500, 500);
-
 				destCtx1.drawImage(sourceCanvas, 0, 0, dWidth, dHeight);
-				//		destCtx2.drawImage(sourceCanvas, 0, 0, dWidth, dHeight);
-
 				destinationIframe.contentWindow.postMessage(500 * sourceCanvas.height / sourceCanvas.width);
+				destinationIframe.scrollIntoView({
+					behavior: 'smooth'
+				});
+
+
 			} else {
 				if (sourceCanvas == null) {
 					alert("Source Canvas Not Available");
@@ -395,13 +396,10 @@
 				if (destinationCanvas == null) {
 					alert("Destination Canvas Not Available");
 				}
-				//	if (destinationCanvas2 == null) {
-				//		alert("Destination Canvas(2) Not Available");
-				//	}
+
 			}
 
 			//adjust the frame size
-			//destinationIframe.height = destinationIframe.contentWindow.document.body.scrollHeight;
 			resizeIframe();
 		}
 
@@ -489,6 +487,13 @@
 							<div class="tooltip">Voronoi
 								<span class="tooltiptext"> based on a sketch by takawo:
 									https://www.openprocessing.org/sketch/773439</span>
+							</div>
+						</div>
+						<div id="lineArt" class="draggable" draggable="true"
+							ondragstart="event.dataTransfer.setData('text/plain',null)">
+							<div class="tooltip">Line Art
+								<span class="tooltiptext"> based on a sketch by d_ynamic:
+									https://www.reddit.com/r/generative/comments/g7o79g/processing_3_50_lines/</span>
 							</div>
 						</div>
 						<H3>Export Image</H3>

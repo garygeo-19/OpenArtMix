@@ -14,7 +14,7 @@
     width: 98%;
     /*  background: rgb(184, 210, 228); */
     margin: 5px;
-    padding: 2px;
+    min-height: 40px;
     display: inline-block;
     outline: 2px dashed #3BA380;
 }

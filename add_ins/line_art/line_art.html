@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/stylesheet.css">
     <script src="/libraries/p5.js"></script>
     <script src="/libraries/p5.dom.js"></script>
-    <script src="p5js_kaleidoscope.js"></script>
+    <script src="line_art.js"></script>
 
     <script>
         //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
@@ -16,9 +16,7 @@
 
         function receiver(message) {
             console.log("Message Received");
-
             refreshNeeded = true;
-
             parent.postMessage('updateSize');
         }
     </script>
