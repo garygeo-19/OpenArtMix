@@ -5,7 +5,39 @@
 	<link rel="stylesheet" href="StyleSheet.css">
 	<!-- required for resize function (iframe_resize.js) -->
 	<script src="libraries/jquery.js"></script>
+	<script>
+		//read the mods.json file to create the widgets and their actions
 
+		$.getJSON("mods.json", function (data) {
+			setupMods(data);
+		});
+
+		function setupMods(modList) {
+			objectCount = Object.keys(modList).length;
+			console.log(objectCount);
+			for (let i = 0; i < objectCount; i++) {
+				//	console.log(modList[i]['type']);
+				let addDiv = document.getElementById("add");
+				let modifyDiv = document.getElementById("modify");
+				let exportDiv = document.getElementById("export");
+				switch (modList[i]['type']) {
+
+					case "import":
+						console.log("import");
+						break;
+					case "modify":
+						console.log("modify");
+						break;
+					case "export":
+						console.log("export");
+						break;
+					default:
+						alert("not found");
+				}
+			}
+			return;
+		}
+	</script>
 	<script>
 		var dragged;
 		/* events fired on the draggable target */
@@ -83,50 +115,11 @@
 			3 edits need to add a widget:
 			1. Create the files in the "add_in" directory
 			2. Add the draggable to the html
-			3.  Add the entry in the case statement */
+			3. Add entry in the configuration file */
 
-			var frameSrc; // stores location of iframe
-
-			switch (d.id) {
-				case "uploadImage":
-					frameSrc = "/add_ins/image_upload/image_upload.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "webcamCapture":
-					frameSrc = "/add_ins/webcam_capture/webcam_capture.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "asciiArt":
-					frameSrc = "/add_ins/ascii_art/ascii_art.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "fabricjsEditImage":
-					frameSrc = "/add_ins/fabricjs_edit/fabricjs_edit.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "p5jsKaleidoscope":
-					frameSrc = "/add_ins/p5js_kaleidoscope/p5js_kaleidoscope.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "p5jsRiso":
-					frameSrc = "/add_ins/p5js_rgb_riso/p5js_rgb_riso.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "voronoi":
-					frameSrc = "/add_ins/voronoi/voronoi.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "lineArt":
-					frameSrc = "/add_ins/line_art/line_art.html"
-					callFrame(frameSrc, e.target);
-					break;
-				case "exportImage":
-					frameSrc = "/add_ins/image_export/image_export.html"
-					callFrame(frameSrc, e.target);
-					break;
-				default:
-					alert(d.id + " not found");
-			}
+			var frameSrc = d.dataset.frameurl; // stores location of iframe using the div's data attributes
+			console.log(frameSrc);
+			callFrame(frameSrc, e.target);
 
 		}
 
@@ -444,62 +437,77 @@
 					<hr>
 					<H3>Add Image</H3>
 					<div class="buffer">
-						<div id="uploadImage" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Upload Image
-								<span class="tooltiptext">Uploads an Image</span>
+						<div id="add">
+							<div id="uploadImage" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/image_upload/image_upload.html">
+								<div class="tooltip">Upload Image
+									<span class="tooltiptext">Uploads an Image</span>
+								</div>
 							</div>
-						</div>
-						<div id="webcamCapture" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Web Cam Capture
-								<span class="tooltiptext">Captures Image from Web Cam</span>
+							<div id="webcamCapture" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/webcam_capture/webcam_capture.html">
+								<div class="tooltip">Web Cam Capture
+									<span class="tooltiptext">Captures Image from Web Cam</span>
+								</div>
 							</div>
 						</div>
 						<H3>Modify Image</H3>
-						<div id="asciiArt" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">ASCII Art
-								<span class="tooltiptext"> based on P5JS Ascii Art Demo</span>
+						<div id="modify">
+							<div id="asciiArt" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/ascii_art/ascii_art.html">
+								<div class="tooltip">ASCII Art
+									<span class="tooltiptext"> based on P5JS Ascii Art Demo</span>
+								</div>
 							</div>
-						</div>
-						<div id="fabricjsEditImage" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Edit Image
-								<span class="tooltiptext"> based on paperjs demo</span>
+							<div id="fabricjsEditImage" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/fabricjs_edit/fabricjs_edit.html">
+								<div class="tooltip">Edit Image
+									<span class="tooltiptext"> based on paperjs demo</span>
+								</div>
 							</div>
-						</div>
-						<div id="p5jsKaleidoscope" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Kaleidoscope
-								<span class="tooltiptext"> based on a p5js sketch
-									https://www.openprocessing.org/sketch/868626</span>
+							<div id="p5jsKaleidoscope" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/p5js_kaleidoscope/p5js_kaleidoscope.html">
+								<div class="tooltip">Kaleidoscope
+									<span class="tooltiptext"> based on a p5js sketch
+										https://www.openprocessing.org/sketch/868626</span>
+								</div>
 							</div>
-						</div>
-						<div id="p5jsRiso" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Riso Colorer
-								<span class="tooltiptext"> based on the P5JS Riso Library</span>
+							<div id="p5jsRiso" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/p5js_rgb_riso/p5js_rgb_riso.html">
+								<div class="tooltip">Riso Colorer
+									<span class="tooltiptext"> based on the P5JS Riso Library</span>
+								</div>
 							</div>
-						</div>
-						<div id="voronoi" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Voronoi
-								<span class="tooltiptext"> based on a sketch by takawo:
-									https://www.openprocessing.org/sketch/773439</span>
+							<div id="voronoi" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/voronoi/voronoi.html">
+								<div class="tooltip">Voronoi
+									<span class="tooltiptext"> based on a sketch by takawo:
+										https://www.openprocessing.org/sketch/773439</span>
+								</div>
 							</div>
-						</div>
-						<div id="lineArt" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							<div class="tooltip">Line Art
-								<span class="tooltiptext"> based on a sketch by d_ynamic:
-									https://www.reddit.com/r/generative/comments/g7o79g/processing_3_50_lines/</span>
+							<div id="lineArt" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/line_art/line_art.html">
+								<div class="tooltip">Line Art
+									<span class="tooltiptext"> based on a sketch by d_ynamic:
+										https://www.reddit.com/r/generative/comments/g7o79g/processing_3_50_lines/</span>
+								</div>
 							</div>
 						</div>
 						<H3>Export Image</H3>
-						<div id="exportImage" class="draggable" draggable="true"
-							ondragstart="event.dataTransfer.setData('text/plain',null)">
-							Export Image
+						<div id="export">
+							<div id="exportImage" class="draggable" draggable="true"
+								ondragstart="event.dataTransfer.setData('text/plain',null)"
+								data-frameURL="/mods/image_export/image_export.html">
+								Export Image
+							</div>
 						</div>
 					</div>
 				</div>

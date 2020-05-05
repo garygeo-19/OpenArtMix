@@ -1,0 +1,83 @@
+{
+    "0": {
+        "id": 0,
+        "name": "upload",
+        "display_name": "Upload Image",
+        "tool_tip": "Upload an image from your computer.",
+        "details": "Upload an image from your computer.",
+        "type": "import",
+        "canvas_in": false,
+        "canvas_out": true
+    },
+    "1": {
+        "id": 1,
+        "name": "fabric_editor",
+        "display_name": "Edit Image",
+        "tool_tip": "Edit an image.",
+        "details": "An image editor based on fabric.js.",
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
+    },
+    "2": {
+        "id": 2,
+        "name": "download",
+        "display_name": "Download Image",
+        "tool_tip": "Download an image.",
+        "details": "Download an image.",
+        "type": "export",
+        "canvas_in": true,
+        "canvas_out": false
+    },
+    "3": {
+        "id": 3,
+        "name": "web_cam_capture",
+        "display_name": "Webcam Capture",
+        "tool_tip": null,
+        "details": null,
+        "type": "import",
+        "canvas_in": false,
+        "canvas_out": true
+    },
+    "4": {
+        "id": 4,
+        "name": "kaleidoscope",
+        "display_name": "Kaleidoscope",
+        "tool_tip": null,
+        "details": null,
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
+    },
+    "5": {
+        "id": 5,
+        "name": "riso",
+        "display_name": "Riso Color",
+        "tool_tip": null,
+        "details": null,
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
+    },
+    "6": {
+        "id": 6,
+        "name": "voronoi",
+        "display_name": "Voronoi",
+        "tool_tip": null,
+        "details": null,
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
+    },
+    "7": {
+        "id": 7,
+        "name": "line_art",
+        "display_name": "Line Art",
+        "tool_tip": null,
+        "details": null,
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
+    }
+
+}

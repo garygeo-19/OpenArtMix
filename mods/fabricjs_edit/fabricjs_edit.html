@@ -288,7 +288,7 @@
                 canvas.add(oImg);
             });
 */
-
+            //added to transfer images
             //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
             function receiver(message) {
                 setTimeout(() => {
@@ -327,6 +327,7 @@
             //Add an event listener to the window object to catch any message events
             window.addEventListener('message', receiver, false);
             //https://stackoverflow.com/questions/18799415/fabric-js-create-image-object-from-imagedata-object-of-canvas-api
+            //end additions
 
             var indexF;
             $('webgl').onclick = function () {
