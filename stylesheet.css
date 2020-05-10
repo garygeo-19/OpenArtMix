@@ -135,6 +135,12 @@ body,
     display: inline-block;
 }
 
+/* need to make sure the attribution button clicks do not click the text*/
+
+.not-button {
+    pointer-events: none;
+}
+
 iframe {
     border: 0px rgb(202, 201, 201) solid;
     /*  width: 98%;

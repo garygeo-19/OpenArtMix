@@ -3,16 +3,22 @@
 <head>
 
 	<link rel="stylesheet" href="StyleSheet.css">
+	<!-- micro modal css -->
+	<link rel="stylesheet" href="mm.css">
 	<!-- required for resize function (iframe_resize.js) -->
 	<script src="libraries/jquery.js"></script>
+	<!-- for description\attribution modal -->
+	<script src="libraries/micromodal.min.js"></script>
 	<script>
 		//read the mods.json file to create the widgets and their actions
 
 		$.getJSON("mods.json", function (data) {
+
 			setupMods(data);
 		});
 
 		function setupMods(modList) {
+
 			objectCount = Object.keys(modList).length;
 			console.log(objectCount);
 			for (let i = 0; i < objectCount; i++) {
@@ -20,10 +26,37 @@
 				let addDiv = document.getElementById("add");
 				let modifyDiv = document.getElementById("modify");
 				let exportDiv = document.getElementById("export");
-				switch (modList[i]['type']) {
 
+				let modDraggable = document.createElement("div");
+				modDraggable.id = modList[i]['name'];
+				modDraggable.className = "draggable";
+				modDraggable.draggable = "true";
+				modDraggable.ondragstart = "event.dataTransfer.setData('text/plain',null)";
+				modDraggable.dataset.frameurl = modList[i]['location'];
+				let modDetails = modList[i]['details'];
+				let modLabel = modList[i]['display_name'] +
+					`  <button class="btn-trigger" data-micromodal-trigger="modal-1" data-mod_name="` +
+					modList[i]['name'] +
+					`" data-mod_id="` +
+					modList[i]['id'] +
+					`" data-mod_details="` +
+					modList[i]['details'] +
+					`")><i class="not-button">i</i></button>`;
+				//	console.log("modDetails:");
+				//	console.log(modDetails);
+				//set the listener for the info button on the widget list to dynamically change the modal content
+				modDraggable.onclick = function () {
+					triggerDetails = event.target.dataset["mod_details"];
+					let modalContent = document.getElementById("modal-1-content");
+					modalContent.innerHTML = triggerDetails;
+				};
+				modDraggable.innerHTML = modLabel;
+				switch (modList[i]['type']) {
 					case "import":
 						console.log("import");
+						addDiv.appendChild(modDraggable);
+
+
 						break;
 					case "modify":
 						console.log("modify");
@@ -35,6 +68,7 @@
 						alert("not found");
 				}
 			}
+			MicroModal.init(); //initialize micro modal
 			return;
 		}
 	</script>
@@ -98,25 +132,29 @@
 				//remove as we want to keep--	dragged.parentNode.removeChild(dragged);
 
 				var frameHolder = event.target.querySelector('.frameholder');
-				console.log(frameHolder.children);
+				//console.log(frameHolder.children);
 
 				if (frameHolder.children.length > 0) {
 					alert("Remove Existing Widget or Add a New Section");
 				} else {
 					event.target.querySelector('.frameHolder').appendChild(nodeCopy)
 					addWidget(event, dragged);
+					//set the listener for the node copy info buttons... this is necessary as the listener is not copied.
+					nodeCopy.children[0].onclick = function () {
+						triggerDetails = nodeCopy.children[0].dataset["mod_details"];
+						let modalContent = document.getElementById("modal-1-content");
+						modalContent.innerHTML = triggerDetails;
+
+					};
+
+					//need to initialize when ever the info icon is cloned
+					MicroModal.init();
 				}
 			}
 		}, false);
 
 
 		function addWidget(e, d) {
-			/*
-			3 edits need to add a widget:
-			1. Create the files in the "add_in" directory
-			2. Add the draggable to the html
-			3. Add entry in the configuration file */
-
 			var frameSrc = d.dataset.frameurl; // stores location of iframe using the div's data attributes
 			console.log(frameSrc);
 			callFrame(frameSrc, e.target);
@@ -236,7 +274,8 @@
 					}
 					//only one consecutive empty
 					if (n > 0) {
-						if (nList[n - 1].childNodes[1].hasChildNodes() == false && nList[n].childNodes[1].hasChildNodes() ==
+						if (nList[n - 1].childNodes[1].hasChildNodes() == false && nList[n].childNodes[1]
+							.hasChildNodes() ==
 							false) { //2 empty in a row, remove 1
 							console.log("2 empty in a row, remove 1");
 							systemLocation.removeChild(nList[n - 1]);
@@ -244,7 +283,8 @@
 							//	return;
 						}
 						//only one consecutive with content
-						if (nList[n - 1].childNodes[1].hasChildNodes() == true && nList[n].childNodes[1].hasChildNodes() ==
+						if (nList[n - 1].childNodes[1].hasChildNodes() == true && nList[n].childNodes[1]
+							.hasChildNodes() ==
 							true) { //if the first node has content we should add a new empty first node
 							console.log("add empty first node");
 							systemLocation.insertBefore(createSection(), nList[n]);
@@ -295,19 +335,21 @@
 			//	collapsibleButton.className = "collapsible";
 			//	buttonHolder.appendChild(collapsibleButton);
 
+
+
+			var transferButton = document.createElement("div");
+			transferButton.innerHTML = "Transfer";
+			transferButton.className = "collapsible";
+			buttonHolder.appendChild(transferButton);
+
 			var removeButton = document.createElement("div");
-			removeButton.innerHTML = "Clear";
+			removeButton.innerHTML = "Remove";
 			removeButton.className = "collapsible";
 			removeButton.addEventListener("click", function (event) {
 				console.log("remove button pressed")
 				removeWidget(event);
 			}, false);
 			buttonHolder.appendChild(removeButton);
-
-			var transferButton = document.createElement("div");
-			transferButton.innerHTML = "Transfer";
-			transferButton.className = "collapsible";
-			buttonHolder.appendChild(transferButton);
 
 			var currentSequence = sequence;
 			//trasfer image
@@ -424,6 +466,39 @@
 </head>
 
 <body onload="sectionSystem()" id="pageMain">
+	<!--modal-->
+	<!--modal-->
+	<!--<button class="btn-trigger" data-micromodal-trigger="modal-1"><i>button here</i></button>
+	-->
+	<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+		<div class="modal__overlay" tabindex="-1" data-micromodal-close>
+			<div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title"
+				aria-describedby="modal-1-content">
+				<div role="document">
+					<header class="modal__header">
+						<h3 class="modal__title" id="modal-1-title">
+							Details and Attribution
+						</h3>
+						<button class="modal__close" aria-label="Close modal" aria-controls="modal__container1"
+							data-micromodal-close></button>
+					</header>
+					<main class="modal__content" id="modal-1-content">
+						<p>
+							Try hitting the <code>tab</code> key and notice how the focus stays within the modal
+							itself. Also, <code>esc</code> to close modal.
+						</p>
+					</main>
+					<footer class="modal__footer">
+						<button class="modal__btn" data-micromodal-close
+							aria-label="Close this dialog window">Close</button>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--modal-->
+
+
 	<div class="container">
 		<div class="header">
 			<h1>Art Mixer</h1>
@@ -514,6 +589,7 @@
 				<div class="rightContent" id="c2"></div>
 			</div>
 		</div>
+
 
 </body>
 
