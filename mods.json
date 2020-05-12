@@ -16,7 +16,7 @@
         "display_name": "Edit Image",
         "location": "/mods/fabricjs_edit/fabricjs_edit.html",
         "tool_tip": "Edit an image.",
-        "details": "An image editor based on fabric.js.",
+        "details": "An image editor based on fabric.js and the fabric.js demo.",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
@@ -25,7 +25,7 @@
         "id": 2,
         "name": "download",
         "display_name": "Download Image",
-        "location": "/mods/webcam_capture/webcam_capture.html",
+        "location": "/mods/image_export/image_export.html",
         "tool_tip": "Download an image.",
         "details": "Download an image.",
         "type": "export",
@@ -49,7 +49,7 @@
         "display_name": "Kaleidoscope",
         "location": "/mods/p5js_kaleidoscope/p5js_kaleidoscope.html",
         "tool_tip": null,
-        "details": null,
+        "details": "based on a p5js sketch https://www.openprocessing.org/sketch/868626",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
@@ -71,7 +71,7 @@
         "display_name": "Voronoi",
         "location": "/mods/voronoi/voronoi.html",
         "tool_tip": null,
-        "details": null,
+        "details": "based on a sketch by takawo: https://www.openprocessing.org/sketch/773439",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
@@ -82,7 +82,7 @@
         "display_name": "Line Art",
         "location": "/mods/line_art/line_art.html",
         "tool_tip": null,
-        "details": null,
+        "details": "based on a sketch by d_ynamic: https: //www.reddit.com/r/generative/comments/g7o79g/processing_3_50_lines/",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true

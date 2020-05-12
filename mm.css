@@ -3,7 +3,8 @@
     border-radius: 50%;
     padding-left: .3rem;
     padding-right: .3rem;
-
+    background: rgba(92, 85, 133, 0.1);
+    color: rgba(229, 228, 236, 0.9)
 }
 
 .modal {

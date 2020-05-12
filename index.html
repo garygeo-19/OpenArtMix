@@ -55,14 +55,14 @@
 					case "import":
 						console.log("import");
 						addDiv.appendChild(modDraggable);
-
-
 						break;
 					case "modify":
 						console.log("modify");
+						modifyDiv.appendChild(modDraggable);
 						break;
 					case "export":
 						console.log("export");
+						exportDiv.appendChild(modDraggable);
 						break;
 					default:
 						alert("not found");
@@ -440,26 +440,7 @@
 
 
 
-		function setCollapsible(coll) {
-			/* 			//	var coll = document.getElementsByClassName("collapsible");
-						var i;
-						coll.addEventListener("click", function () {
-							this.classList.toggle("active");
-							var content = this.parentElement.parentElement.querySelector('iframe');
-							//console.log("content");
-							//	console.log(content);
-
-							if (content.style.display === "block" ||
-								content.style.display === "") {
-								content.style.display = "none";
-								coll.innerHTML = "Expand";
-							} else {
-								content.style.display = "block";
-								coll.innerHTML = "Collapse";
-							}
-						}); */
-			//	}
-		}
+		function setCollapsible(coll) {}
 	</script>
 
 
@@ -467,9 +448,6 @@
 
 <body onload="sectionSystem()" id="pageMain">
 	<!--modal-->
-	<!--modal-->
-	<!--<button class="btn-trigger" data-micromodal-trigger="modal-1"><i>button here</i></button>
-	-->
 	<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
 		<div class="modal__overlay" tabindex="-1" data-micromodal-close>
 			<div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title"
@@ -484,8 +462,7 @@
 					</header>
 					<main class="modal__content" id="modal-1-content">
 						<p>
-							Try hitting the <code>tab</code> key and notice how the focus stays within the modal
-							itself. Also, <code>esc</code> to close modal.
+							No Content Available
 						</p>
 					</main>
 					<footer class="modal__footer">
@@ -497,8 +474,6 @@
 		</div>
 	</div>
 	<!--modal-->
-
-
 	<div class="container">
 		<div class="header">
 			<h1>Art Mixer</h1>
@@ -513,76 +488,12 @@
 					<H3>Add Image</H3>
 					<div class="buffer">
 						<div id="add">
-							<div id="uploadImage" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/image_upload/image_upload.html">
-								<div class="tooltip">Upload Image
-									<span class="tooltiptext">Uploads an Image</span>
-								</div>
-							</div>
-							<div id="webcamCapture" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/webcam_capture/webcam_capture.html">
-								<div class="tooltip">Web Cam Capture
-									<span class="tooltiptext">Captures Image from Web Cam</span>
-								</div>
-							</div>
 						</div>
 						<H3>Modify Image</H3>
 						<div id="modify">
-							<div id="asciiArt" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/ascii_art/ascii_art.html">
-								<div class="tooltip">ASCII Art
-									<span class="tooltiptext"> based on P5JS Ascii Art Demo</span>
-								</div>
-							</div>
-							<div id="fabricjsEditImage" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/fabricjs_edit/fabricjs_edit.html">
-								<div class="tooltip">Edit Image
-									<span class="tooltiptext"> based on paperjs demo</span>
-								</div>
-							</div>
-							<div id="p5jsKaleidoscope" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/p5js_kaleidoscope/p5js_kaleidoscope.html">
-								<div class="tooltip">Kaleidoscope
-									<span class="tooltiptext"> based on a p5js sketch
-										https://www.openprocessing.org/sketch/868626</span>
-								</div>
-							</div>
-							<div id="p5jsRiso" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/p5js_rgb_riso/p5js_rgb_riso.html">
-								<div class="tooltip">Riso Colorer
-									<span class="tooltiptext"> based on the P5JS Riso Library</span>
-								</div>
-							</div>
-							<div id="voronoi" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/voronoi/voronoi.html">
-								<div class="tooltip">Voronoi
-									<span class="tooltiptext"> based on a sketch by takawo:
-										https://www.openprocessing.org/sketch/773439</span>
-								</div>
-							</div>
-							<div id="lineArt" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/line_art/line_art.html">
-								<div class="tooltip">Line Art
-									<span class="tooltiptext"> based on a sketch by d_ynamic:
-										https://www.reddit.com/r/generative/comments/g7o79g/processing_3_50_lines/</span>
-								</div>
-							</div>
 						</div>
 						<H3>Export Image</H3>
 						<div id="export">
-							<div id="exportImage" class="draggable" draggable="true"
-								ondragstart="event.dataTransfer.setData('text/plain',null)"
-								data-frameURL="/mods/image_export/image_export.html">
-								Export Image
-							</div>
 						</div>
 					</div>
 				</div>
