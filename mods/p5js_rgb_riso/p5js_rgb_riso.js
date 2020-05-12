@@ -10,6 +10,7 @@ let teal, teals, tealCheckbox, tealXSlider, tealYSlider, tealScaleSlider;
 
 let canvasCapture, canvasCaptureWidth, canvasCaptureHeight;
 let cnv, button;
+let scaleSliderMax;
 var refreshNeeded;
 
 
@@ -25,6 +26,7 @@ function preload() {
 function setup() {
     pixelDensity(2);
     refreshNeeded = false;
+    scaleSliderMax = 4;
 
     cnv = createCanvas(500, 500);
     cnv.id('frameCanvasOut');
@@ -35,65 +37,65 @@ function setup() {
     redCheckbox = createCheckbox("Red", false);
     redCheckbox.changed(updateRiso);
     createElement('label', 'X:');
-    redXSlider = createSlider(-1 * width / 2, width / 2, 0, 1);
+    redXSlider = createSlider(-1 * width, width, 0, 1);
     redXSlider.input(updateRiso);
     createElement('label', 'Y:');
-    redYSlider = createSlider(-1 * height / 2, height / 2, 0, 1);
+    redYSlider = createSlider(-1 * height, height, 0, 1);
     redYSlider.input(updateRiso);
     createElement('label', 'Scale:');
-    redScaleSlider = createSlider(.1, 2, 1, .1);
+    redScaleSlider = createSlider(.1, scaleSliderMax, 2, .1);
     redScaleSlider.input(updateRiso);
     //green
     green = new Riso("green", width, height);
     greenCheckbox = createCheckbox("Green", false);
     greenCheckbox.changed(updateRiso);
     createElement('label', 'X:');
-    greenXSlider = createSlider(-1 * width / 2, width / 2, 0, 1);
+    greenXSlider = createSlider(-1 * width, width, 0, 1);
     greenXSlider.input(updateRiso);
     createElement('label', 'Y:');
-    greenYSlider = createSlider(-1 * height / 2, height / 2, 0, 1);
+    greenYSlider = createSlider(-1 * height, height, 0, 1);
     greenYSlider.input(updateRiso);
     createElement('label', 'Scale:');
-    greenScaleSlider = createSlider(.1, 2, 1, .1);
+    greenScaleSlider = createSlider(.1, scaleSliderMax, 2, .1);
     greenScaleSlider.input(updateRiso);
     //blue
     blue = new Riso("blue", width, height);
     blueCheckbox = createCheckbox("Blue", false);
     blueCheckbox.changed(updateRiso);
     createElement('label', 'X:');
-    blueXSlider = createSlider(-1 * width / 2, width / 2, 0, 1);
+    blueXSlider = createSlider(-1 * width, width, 0, 1);
     blueXSlider.input(updateRiso);
     createElement('label', 'Y:');
-    blueYSlider = createSlider(-1 * height / 2, height / 2, 0, 1);
+    blueYSlider = createSlider(-1 * height, height, 0, 1);
     blueYSlider.input(updateRiso);
     createElement('label', 'Scale:');
-    blueScaleSlider = createSlider(.1, 2, 1, .1);
+    blueScaleSlider = createSlider(.1, scaleSliderMax, 2, .1);
     blueScaleSlider.input(updateRiso);
     //purple
     purple = new Riso("purple", width, height);
     purpleCheckbox = createCheckbox("Purple", false);
     purpleCheckbox.changed(updateRiso);
     createElement('label', 'X:');
-    purpleXSlider = createSlider(-1 * width / 2, width / 2, 0, 1);
+    purpleXSlider = createSlider(-1 * width, width, 0, 1);
     purpleXSlider.input(updateRiso);
     createElement('label', 'Y:');
-    purpleYSlider = createSlider(-1 * height / 2, height / 2, 0, 1);
+    purpleYSlider = createSlider(-1 * height, height, 0, 1);
     purpleYSlider.input(updateRiso);
     createElement('label', 'Scale:');
-    purpleScaleSlider = createSlider(.1, 2, 1, .1);
+    purpleScaleSlider = createSlider(.1, scaleSliderMax, 2, .1);
     purpleScaleSlider.input(updateRiso);
     //teal
     teal = new Riso("teal", width, height);
     tealCheckbox = createCheckbox("Teal", false);
     tealCheckbox.changed(updateRiso);
     createElement('label', 'X:');
-    tealXSlider = createSlider(-1 * width / 2, width / 2, 0, 1);
+    tealXSlider = createSlider(-1 * width, width, 0, 1);
     tealXSlider.input(updateRiso);
     createElement('label', 'Y:');
-    tealYSlider = createSlider(-1 * height / 2, height / 2, 0, 1);
+    tealYSlider = createSlider(-1 * height, height, 0, 1);
     tealYSlider.input(updateRiso);
     createElement('label', 'Scale:');
-    tealScaleSlider = createSlider(.1, 2, 1, .1);
+    tealScaleSlider = createSlider(.1, scaleSliderMax, 2, .1);
     tealScaleSlider.input(updateRiso);
 
     reds = extractRGBChannel(canvasCapture, 0);
@@ -133,9 +135,6 @@ function draw() {
 
 function updateRiso() {
 
-    // image(canvasCapture, 600, 600);
-
-
     if (redCheckbox.checked() == false && greenCheckbox.checked() == false && blueCheckbox.checked() == false && purpleCheckbox.checked() == false && tealCheckbox.checked() == false) {
         image(canvasCapture, 0, 0, canvasCapture.width, canvasCapture.height);
     } else {
@@ -151,34 +150,24 @@ function updateRiso() {
 
         //red
         if (redCheckbox.checked()) {
-
-            red.imageMode(CENTER);
-            red.image(reds, canvasCaptureWidth / 2 + redXSlider.value(), canvasCaptureHeight / 2 + redYSlider.value(), canvasCaptureWidth * redScaleSlider.value(), canvasCaptureHeight * redScaleSlider.value());
+            red.image(reds, 0 + redXSlider.value(), 0 + redYSlider.value(), canvasCaptureWidth * redScaleSlider.value(), canvasCaptureHeight * redScaleSlider.value());
         }
         //green
         if (greenCheckbox.checked()) {
-
-            green.imageMode(CENTER);
-            green.image(greens, canvasCaptureWidth / 2 + greenXSlider.value(), canvasCaptureHeight / 2 + greenYSlider.value(), canvasCaptureWidth * greenScaleSlider.value(), canvasCaptureHeight * greenScaleSlider.value());
+            green.image(greens, 0 + greenXSlider.value(), 0 + greenYSlider.value(), canvasCaptureWidth * greenScaleSlider.value(), canvasCaptureHeight * greenScaleSlider.value());
         }
         //blue
         if (blueCheckbox.checked()) {
-
-            blue.imageMode(CENTER);
-            blue.image(blues, canvasCaptureWidth / 2 + blueXSlider.value(), canvasCaptureHeight / 2 + blueYSlider.value(), canvasCaptureWidth * blueScaleSlider.value(), canvasCaptureHeight * blueScaleSlider.value());
+            blue.image(blues, 0 + blueXSlider.value(), 0 + blueYSlider.value(), canvasCaptureWidth * blueScaleSlider.value(), canvasCaptureHeight * blueScaleSlider.value());
         }
 
         //purple
         if (purpleCheckbox.checked()) {
-
-            purple.imageMode(CENTER);
-            purple.image(purples, canvasCaptureWidth / 2 + purpleXSlider.value(), canvasCaptureHeight / 2 + purpleYSlider.value(), canvasCaptureWidth * purpleScaleSlider.value(), canvasCaptureHeight * purpleScaleSlider.value());
+            purple.image(purples, 0 + purpleXSlider.value(), 0 + purpleYSlider.value(), canvasCaptureWidth * purpleScaleSlider.value(), canvasCaptureHeight * purpleScaleSlider.value());
         }
         //teal
         if (tealCheckbox.checked()) {
-
-            teal.imageMode(CENTER);
-            teal.image(teals, canvasCaptureWidth / 2 + tealXSlider.value(), canvasCaptureHeight / 2 + tealYSlider.value(), canvasCaptureWidth * tealScaleSlider.value(), canvasCaptureHeight * tealScaleSlider.value());
+            teal.image(teals, 0 + tealXSlider.value(), 0 + tealYSlider.value(), canvasCaptureWidth * tealScaleSlider.value(), canvasCaptureHeight * tealScaleSlider.value());
         }
 
 
