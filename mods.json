@@ -86,6 +86,17 @@
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
+    },
+    "8": {
+        "id": 8,
+        "name": "add_text",
+        "display_name": "Add Text",
+        "location": "/mods/add_text/add_text.html",
+        "tool_tip": null,
+        "details": "based on fabric js",
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
     }
 
 }
