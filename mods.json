@@ -97,6 +97,17 @@
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
+    },
+    "9": {
+        "id": 9,
+        "name": "crop",
+        "display_name": "Crop Image",
+        "location": "/mods/crop/tinycrop.html",
+        "tool_tip": null,
+        "details": "Press the canvas to see the cropping adjustment handles in the corners.  This is based on tinyCrop example here: http://willbamford.github.io/tinycrop/",
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
     }
 
 }

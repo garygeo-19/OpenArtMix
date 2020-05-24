@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Image Cropper based on TinyCrop</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" href="http://willbamford.github.io/tinycrop/styles/normalize.css">
+    <!---->
+    <link rel="stylesheet" href="http://willbamford.github.io/tinycrop/styles/style.css">
+    <script src="http://willbamford.github.io/tinycrop/dist/tinycrop.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="mount" class="mount"></div>
+        <!--
+      -->
+        <div class="info">
+            <div class="field-pair">
+                <div class="field">
+                    <input type="text" id="input-x" value="0" />
+                    <label for="input-x">X</label>
+                </div>
+                <div class="field">
+                    <input type="text" id="input-y" value="0" />
+                    <label for="input-x">Y</label>
+                </div>
+            </div>
+            <!--
+        -->
+            <div class="field-pair">
+                <div class="field">
+                    <input type="text" id="input-width" value="0" />
+                    <label for="input-x">Width</label>
+                </div>
+                <div class="field">
+                    <input type="text" id="input-height" value="0" />
+                    <label for="input-x">Height</label>
+                </div>
+            </div>
+
+
+            <!--
+        --><button id="aspect-16-by-9">16:9 aspect ratio</button>
+            <!--
+        --><button id="aspect-square">Square aspect ratio</button>
+            <!--
+        --><button id="aspect-free">Free aspect ratio</button>
+            <!--
+        --><button id="container-fit-to-image">Fit container to image</button>
+            <!--
+        --><button id="container-square">Square container</button>
+            <!--
+        --><button id="container-2-by-1">2:1 container</button>
+            <!--
+        -->
+        </div>
+
+    </div>
+    <div class="box">
+        <div class="canvas-container">
+            <canvas id="frameCanvasIn" width="500" height="500" style="display:none"></canvas>
+            <canvas id="frameCanvasOut" width="500" height="500" style="display:none"></canvas>
+        </div>
+    </div>
+    <script>
+        var canvasIn = document.getElementById('frameCanvasIn'),
+            contextIn = canvasIn.getContext('2d');
+        var canvasOut = document.getElementById('frameCanvasOut'),
+            contextOut = canvasIn.getContext('2d');
+
+        var crop;
+        make_base();
+        //grab the context from your destination canvas
+
+
+        function make_base() {
+            base_image = new Image();
+            base_image.src = '/assets/Transfer-an-Image.png';
+            base_image.onload = function () {
+                contextIn.drawImage(base_image, 0, 0);
+                console.log("load done");
+                //call its drawImage() function passing it the source canvas directly
+                contextOut.drawImage(base_image, 0, 0);
+                var imgToCrop = base_image;
+                //   '/assets/Transfer-an-Image.png';
+
+                setImage(imgToCrop);
+            }
+        }
+
+        //added to support canvas transfering
+
+        //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
+        function receiver(message) {
+            setTimeout(() => {
+                loadCanvasImage()
+
+
+            }, 1); //should try to remove this.
+            parent.postMessage('updateSize');
+        }
+
+        function loadCanvasImage() {
+            console.log("message received")
+            let canvasToCrop = document.getElementById("frameCanvasIn");
+            let imgToCrop = canvasToCrop.toDataURL("image/png");
+            setImage(imgToCrop);
+        }
+        //Add an event listener to the window object to catch any message events
+        window.addEventListener('message', receiver, false);
+
+        //https://stackoverflow.com/questions/18799415/fabric-js-create-image-object-from-imagedata-object-of-canvas-api
+        //start the tiny crop 
+
+
+        function setImage(passedImage) {
+            console.log(crop)
+
+            //remove out mount and add new one since crop does not have a destroy
+            let mountElement = document.getElementById('mount');
+            let mountParent = mountElement.parentNode;
+            mountParent.removeChild(mountElement);
+            var newMount = document.createElement('div');
+            newMount.setAttribute('id', 'mount');
+            newMount.setAttribute('class', 'mount');
+            mountParent.appendChild(newMount);
+
+            crop = tinycrop.create({
+                parent: '#mount',
+                image: passedImage,
+                bounds: {
+                    width: '100%',
+                    height: '50%'
+                },
+                // backgroundColors: ['#fff', '#f0f0f0'],
+                selection: {
+                    // color: 'red',
+                    // activeColor: 'blue',
+                    // aspectRatio: 4 / 3,
+                    // minWidth: 200,
+                    // minHeight: 300
+                    // width: 400,
+                    // height: 500,
+                    // x: 100,
+                    // y: 500
+                }
+
+            })
+
+            crop
+                .on('start', function (region) {
+                    setInputsFromRegion(region)
+                })
+                .on('move', function (region) {
+                    setInputsFromRegion(region)
+                })
+                .on('resize', function (region) {
+                    setInputsFromRegion(region)
+                })
+                .on('change', function (region) {
+                    setInputsFromRegion(region)
+                })
+                .on('end', function (region) {
+                    console.log("end");
+                    setInputsFromRegion(region)
+
+                    var canvas = document.getElementById('frameCanvasOut');
+                    canvas.width = region.width;
+                    canvas.height = region.height;
+                    var ctx = canvas.getContext('2d');
+                    var image = document.getElementById('frameCanvasIn');
+                    //write to frameout with for just the specified region
+                    ctx.drawImage(image, region.x, region.y, region.width, region.height, 0, 0, canvas.width, canvas
+                        .height);
+
+                })
+        }
+
+        function getId(id) {
+            return document.getElementById(id)
+        }
+
+        var inputX = getId('input-x')
+        var inputY = getId('input-y')
+        var inputWidth = getId('input-width')
+        var inputHeight = getId('input-height')
+
+
+
+        var buttonAspect16By9 = getId('aspect-16-by-9')
+        buttonAspect16By9.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setAspectRatio(16 / 9)
+        })
+
+        var buttonAspect1By1 = getId('aspect-square')
+        buttonAspect1By1.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setAspectRatio(1)
+        })
+
+        var buttonAspectFree = getId('aspect-free')
+        buttonAspectFree.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setAspectRatio(null)
+        })
+
+        var buttonContainerFitImage = getId('container-fit-to-image')
+        buttonContainerFitImage.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setBounds({
+                width: '100%',
+                height: 'auto'
+            })
+        })
+
+        var buttonContainerSquare = getId('container-square')
+        buttonContainerSquare.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setBounds({
+                width: '100%',
+                height: '100%'
+            })
+        })
+
+        var buttonContainer2By1 = getId('container-2-by-1')
+        buttonContainer2By1.addEventListener('click', function (e) {
+            e.preventDefault()
+            crop.setBounds({
+                width: '100%',
+                height: '50%'
+            })
+        })
+
+
+
+        function setInputsFromRegion(region) {
+            inputX.value = region.x
+            inputY.value = region.y
+            inputWidth.value = region.width
+            inputHeight.value = region.height
+        }
+    </script>
+</body>
+
+</html>
