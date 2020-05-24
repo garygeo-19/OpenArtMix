@@ -3,11 +3,9 @@
 
 <head>
     <title>Image Cropper based on TinyCrop</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <link rel="stylesheet" href="http://willbamford.github.io/tinycrop/styles/normalize.css">
-    <!---->
-    <link rel="stylesheet" href="http://willbamford.github.io/tinycrop/styles/style.css">
-    <script src="http://willbamford.github.io/tinycrop/dist/tinycrop.min.js"></script>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="tinycrop.min.js"></script>
 
 </head>
 
@@ -15,8 +13,6 @@
 
     <div class="container">
         <div id="mount" class="mount"></div>
-        <!--
-      -->
         <div class="info">
             <div class="field-pair">
                 <div class="field">
@@ -28,8 +24,6 @@
                     <label for="input-x">Y</label>
                 </div>
             </div>
-            <!--
-        -->
             <div class="field-pair">
                 <div class="field">
                     <input type="text" id="input-width" value="0" />
@@ -48,14 +42,7 @@
         --><button id="aspect-square">Square aspect ratio</button>
             <!--
         --><button id="aspect-free">Free aspect ratio</button>
-            <!--
-        --><button id="container-fit-to-image">Fit container to image</button>
-            <!--
-        --><button id="container-square">Square container</button>
-            <!--
-        --><button id="container-2-by-1">2:1 container</button>
-            <!--
-        -->
+
         </div>
 
     </div>
@@ -97,11 +84,11 @@
         function receiver(message) {
             setTimeout(() => {
                 loadCanvasImage()
-
-
             }, 1); //should try to remove this.
-            parent.postMessage('updateSize');
+            //     parent.postMessage('updateSize');
         }
+        //Add an event listener to the window object to catch any message events
+        window.addEventListener('message', receiver, false);
 
         function loadCanvasImage() {
             console.log("message received")
@@ -109,10 +96,7 @@
             let imgToCrop = canvasToCrop.toDataURL("image/png");
             setImage(imgToCrop);
         }
-        //Add an event listener to the window object to catch any message events
-        window.addEventListener('message', receiver, false);
 
-        //https://stackoverflow.com/questions/18799415/fabric-js-create-image-object-from-imagedata-object-of-canvas-api
         //start the tiny crop 
 
 
@@ -132,8 +116,9 @@
                 parent: '#mount',
                 image: passedImage,
                 bounds: {
+
                     width: '100%',
-                    height: '50%'
+                    height: 'auto'
                 },
                 // backgroundColors: ['#fff', '#f0f0f0'],
                 selection: {
@@ -149,7 +134,7 @@
                 }
 
             })
-
+            parent.postMessage('updateSize'); //to resize the iframe
             crop
                 .on('start', function (region) {
                     setInputsFromRegion(region)
