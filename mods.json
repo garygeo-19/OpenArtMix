@@ -93,7 +93,7 @@
         "display_name": "Add Text",
         "location": "/mods/add_text/add_text.html",
         "tool_tip": null,
-        "details": "based on fabric js",
+        "details": "Select the add text button to add a text box.  You can add more than one.  <br>This built using the FabricJS libary based on this example: https://jsfiddle.net/gislef/Lvfpq57h/",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true

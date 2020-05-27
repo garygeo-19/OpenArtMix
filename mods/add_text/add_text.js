@@ -136,11 +136,10 @@ function loadCanvasImage() {
         canvas.clear(); //clear previous objects
         img.left = 0;
         img.top = 0;
-        //img.width = 50;
-        // img.heigth = 500;
-        //    console.log(img);
-        //  img.scaleToWidth(300);
-
+        canvas.setDimensions({
+            width: img.width,
+            height: img.height
+        });
         canvas.add(img);
         canvas.renderAll();
         canvas.item(0).hasControls = false;
