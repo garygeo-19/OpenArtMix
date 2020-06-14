@@ -18,7 +18,9 @@ function preload() {
 function setup() {
     cnv = createCanvas(500, 500);
     cnv.id('frameCanvasOut');
+    background(0);
     image(img, 0, 0, 500, 500);
+
 
     createElement('br');
     createElement('label', 'X:');
@@ -61,7 +63,7 @@ function setup() {
 }
 
 function draw() {
-    // console.log("draw stART");
+
 
 
     if (refreshNeeded) { // if an image has been transfered
@@ -77,10 +79,10 @@ function draw() {
     if (img != undefined) {
         //graphic
 
-        let triH = gra.width * 0.5 * pow(3, 0.5);
+        let triH = (gra.width * 0.5 * pow(3, 0.5)); //the apex of the triangl2
 
-        gra.clear();
-        gra.background(0);
+        //    gra.clear();
+        //gra.background(0);
         gra.push();
         gra.translate((gra.width - (imageX)) / 2, triH - (imageY) / 2);
         gra.rotate(rote);
@@ -96,9 +98,11 @@ function draw() {
         gra.noErase();
 
         // tiling gra
-        clear();
+        // clear();
+
         let offY = 0;
         let size = dist(0, 0, width, height);
+
         translate(width / 2, height / 2);
         rotate(rote);
         for (let x = -size / 2 - gra.width; x < size / 2 + gra.width; x += gra.width * 1.5) {
@@ -120,7 +124,6 @@ function init() {
 function drawHexa(cx, cy, triGra = gra, radius = gra.width) {
     push();
     translate(cx, cy);
-
     for (let rad = 0; rad < TWO_PI; rad += TWO_PI / 3) {
         push();
         rotate(rad);

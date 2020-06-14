@@ -47,6 +47,12 @@ body,
     padding: 3px;
     background-color: #3E78AD;
     color: #c5cbd6;
+
+}
+
+.beta {
+    font-size: 12px;
+
 }
 
 .content {

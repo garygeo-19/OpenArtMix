@@ -4,6 +4,7 @@
 <head>
     <script src="/libraries/fabric.js"></script>
     <link rel="stylesheet" href="/stylesheet.css">
+    <link rel="stylesheet" href="/style/loader.css">
 
 </head>
 
@@ -54,9 +55,11 @@
                 opacity: 0.5;
             }
         </style>
+
         <div class="canvas-container">
             <canvas id="frameCanvasIn" width="500" height="500" style='display:none'></canvas>
             <canvas id="frameCanvasOut" width="500" height="500"></canvas>
+
         </div>
 
         <div id="left">
@@ -325,6 +328,8 @@
                     canvas.item(0).hasControls = false;
                     canvas.item(0).hasBorders = false;
                     canvas.setActiveObject(canvas.item(0));
+                    //remove loader
+                    document.getElementById("loader").style.display = "none";
                 });
 
                 var loadedObjects = canvas.getObjects();
