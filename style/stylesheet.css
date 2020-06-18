@@ -145,6 +145,18 @@ body,
 
 .not-button {
     pointer-events: none;
+    color: #9199a0;
+
+}
+
+.btn-trigger {
+
+    border-radius: 50%;
+    padding-left: .3rem;
+    padding-right: .3rem;
+    background: rgba(92, 85, 133, 0.1);
+    color: rgba(229, 228, 236, 0.9);
+    border: 2px solid #6185a7;
 }
 
 iframe {

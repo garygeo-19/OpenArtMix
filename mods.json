@@ -60,7 +60,7 @@
         "display_name": "Riso Color",
         "location": "/mods/p5js_rgb_riso/p5js_rgb_riso.html",
         "tool_tip": null,
-        "details": null,
+        "details": "By seperating the image into different color layers interesting effects and layouts can be created.  For example placing 4 smaller images in each corner for a Warhol Effect.   <BR><BR>This utilizes based on the p5.riso library: https://antiboredom.github.io/p5.riso/ .",
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
