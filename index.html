@@ -164,16 +164,19 @@
 		function callFrame(fSrc, eTarget) {
 			console.log("imageToFrame Called");
 			var contentDiv = eTarget.querySelector('.frameholder'); //.appendChild(nodeCopy)
+			//using a break to maintain layout
+			var breakElement = document.createElement("br");
+			contentDiv.appendChild(breakElement);
 			//create frame
 			var addFrame = document.createElement('iframe');
 			addFrame.className = 'frameClass';
 			addFrame.width = '100%';
 			addFrame.scrolling = 'no'; //to prevent scrolling in the content which makes navigation more difficut.
 			addFrame.seamless = "seamless"
-			//	addFrame.height = '520px'; //hard coding as adjusting is not working
 			var frameID = "canvasFrame-" + eTarget.id; //"canvasFrame"; //
 			addFrame.id = frameID;
 			addFrame.src = fSrc;
+
 			contentDiv.appendChild(addFrame);
 			addButtonHolder(contentDiv)
 			sectionSystem();
