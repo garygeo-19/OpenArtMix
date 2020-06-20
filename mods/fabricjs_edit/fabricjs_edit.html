@@ -328,7 +328,7 @@
                     canvas.item(0).hasBorders = false;
                     canvas.setActiveObject(canvas.item(0));
                     //remove loader
-                    document.getElementById("loader").style.display = "none";
+                    //  document.getElementById("loader").style.display = "none";
                 });
 
                 var loadedObjects = canvas.getObjects();
@@ -519,15 +519,18 @@
                 applyFilterValue(21, 'rotation', this.value);
             };
 
+            /* Removed blend, but may add later     
+            
             $('blend-image').onclick = function () {
-                applyFilter(20, this.checked && new f.BlendImage({
-                    image: fImage,
-                }));
-            };
+                     applyFilter(20, this.checked && new f.BlendImage({
+                         image: fImage,
+                     }));
+                 }; 
 
             $('blend-image-mode').onchange = function () {
                 applyFilterValue(20, 'mode', this.value);
             };
+            */
             var imageElement = document.createElement('img');
             imageElement.src = '/assets/Transfer-an-image.png';
             var fImage = new fabric.Image(imageElement);
