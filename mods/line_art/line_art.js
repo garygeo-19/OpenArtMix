@@ -15,6 +15,7 @@ function setup() {
     background(255);
     cnv = createCanvas(500, 500);
     cnv.id('frameCanvasOut');
+    parent.postMessage('updateSize');
 }
 
 function draw() {
@@ -32,16 +33,17 @@ function lineArt() {
         for (x = 0; x < width * 4; x++) {
             xx = x / 4.0;
 
-            // using this version will generate a squished image due to using map(...) in line 26
-            // color c = img.get(int(xx),int(y*height/50.0));
-            c = img.get(int(xx), int(map(y * height / 50.0, 0, height, 50, height - 50)));
+            c = img.get(int(xx), int(y * height / 50.0));
+            // c = img.get(int(xx), int(map(y * height / 50.0, 0, height, 50, height - 50)));
 
             l += (255 - red(c)) / 255 / 4.0; // period of the wave
 
             // 5*decel(m) sets the amplitude of the wave
             // map(...) sets the position of the wave
             m = (255 - red(c)) / 255.0; // separate it from an increasing variable (l)
-            vertex(xx, map((y + 0.5) * height / 50.0, 0, height, 50, height - 50) + sin(l * PI / 2.0) * 5 * decel(m));
+            //vertex(xx, map((y + 0.5) * height / 50.0, 0, height, 50, height - 50) + sin(l * PI / 2.0) * 5 * decel(m));
+            vertex(xx, map((y) * height / 50.0, 0, height, 0, height) + sin(l * PI / 2.0) * 5 * decel(m));
+
         }
         endShape();
     }
