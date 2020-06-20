@@ -100,7 +100,7 @@
             </p>
             <p>
                 <label><span>Grayscale:</span> <input type="checkbox" id="grayscale" disabled></label><br />
-                •<label><span>Avg.</span> <input type="radio" id="average" name="grayscale"></label>
+                &bull;<label><span>Avg.</span> <input type="radio" id="average" name="grayscale"></label>
                 <label><span>Lum.</span> <input type="radio" id="lightness" name="grayscale"></label>
                 <label><span>Light.</span> <input type="radio" id="luminosity" name="grayscale"></label>
             </p>
@@ -113,19 +113,19 @@
             <p>
                 <label><span>Brightness:</span> <input type="checkbox" id="brightness" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="brightness-value" value="0.1" min="-1" max="1" step="0.003921"
-                        disabled></label>
+                &bull;<label>Value: <input type="range" id="brightness-value" value="0.1" min="-1" max="1"
+                        step="0.003921" disabled></label>
             </p>
             <p>
                 <label><span>Gamma:</span> <input type="checkbox" id="gamma" disabled></label>
                 <br>
-                •<label>Red: <input type="range" id="gamma-red" value="1" min="0.2" max="2.2" step="0.003921"
+                &bull;<label>Red: <input type="range" id="gamma-red" value="1" min="0.2" max="2.2" step="0.003921"
                         disabled></label>
                 <br>
-                •<label>Green: <input type="range" id="gamma-green" value="1" min="0.2" max="2.2" step="0.003921"
+                &bull;<label>Green: <input type="range" id="gamma-green" value="1" min="0.2" max="2.2" step="0.003921"
                         disabled></label>
                 <br>
-                •<label>Blue: <input type="range" id="gamma-blue" value="1" min="0.2" max="2.2" step="0.003921"
+                &bull;<label>Blue: <input type="range" id="gamma-blue" value="1" min="0.2" max="2.2" step="0.003921"
                         disabled></label>
 
             </p>
@@ -133,26 +133,27 @@
             <p>
                 <label><span>Contrast:</span> <input type="checkbox" id="contrast" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="contrast-value" value="0" min="-1" max="1" step="0.003921"
+                &bull;<label>Value: <input type="range" id="contrast-value" value="0" min="-1" max="1" step="0.003921"
                         disabled></label>
             </p>
             <p>
                 <label><span>Saturation:</span> <input type="checkbox" id="saturation" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="saturation-value" value="0" min="-1" max="1" step="0.003921"
+                &bull;<label>Value: <input type="range" id="saturation-value" value="0" min="-1" max="1" step="0.003921"
                         disabled></label>
             </p>
 
             <p>
                 <label><span>Hue:</span> <input type="checkbox" id="hue" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="hue-value" value="0" min="-2" max="2" step="0.002"
+                &bull;<label>Value: <input type="range" id="hue-value" value="0" min="-2" max="2" step="0.002"
                         disabled></label>
             </p>
             <p>
                 <label><span>Noise:</span> <input type="checkbox" id="noise" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="noise-value" value="100" min="0" max="1000" disabled></label>
+                &bull;<label>Value: <input type="range" id="noise-value" value="100" min="0" max="1000"
+                        disabled></label>
             </p>
         </div>
         <div id="right">
@@ -160,12 +161,12 @@
             <p>
                 <label><span>Pixelate</span> <input type="checkbox" id="pixelate" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="pixelate-value" value="4" min="2" max="20" disabled></label>
+                &bull;<label>Value: <input type="range" id="pixelate-value" value="4" min="2" max="20" disabled></label>
             </p>
             <p>
                 <label><span>Blur:</span> <input type="checkbox" id="blur" disabled></label>
                 <br>
-                •<label>Value: <input type="range" id="blur-value" value="0.1" min="0" max="1" step="0.01"
+                &bull;<label>Value: <input type="range" id="blur-value" value="0.1" min="0" max="1" step="0.01"
                         disabled></label>
             </p>
 
@@ -173,7 +174,7 @@
             <p>
                 <label><span>Blend Color:</span> <input type="checkbox" id="blend" disabled></label>
                 <br>
-                •<label>Mode:</label>
+                &bull;<label>Mode:</label>
                 <select id="blend-mode" name="blend-mode">
                     <option selected value="add">Add</option>
                     <option value="diff">Diff</option>
@@ -187,13 +188,14 @@
                     <option value="tint">Tint</option>
                 </select>
                 <br>
-                •<label>Color: <input type="color" id="blend-color" value="#00f900"></label><br>
-                •<label>Alpha: <input type="range" id="blend-alpha" min="0" max="1" value="1" step="0.01"></label><br>
+                &bull;<label>Color: <input type="color" id="blend-color" value="#00f900"></label><br>
+                &bull;<label>Alpha: <input type="range" id="blend-alpha" min="0" max="1" value="1"
+                        step="0.01"></label><br>
             </p>
             <p>
                 <label><span>Remove color:</span> <input type="checkbox" id="remove-color" disabled></label><br>
-                •<label>Color: <input type="color" id="remove-color-color" value="#00f900"></label><br>
-                •<label>Distance: <input type="range" id="remove-color-distance" value="0.02" min="0" max="1"
+                &bull;<label>Color: <input type="color" id="remove-color-color" value="#00f900"></label><br>
+                &bull;<label>Distance: <input type="range" id="remove-color-distance" value="0.02" min="0" max="1"
                         step="0.01" disabled></label>
             </p>
             <!--
