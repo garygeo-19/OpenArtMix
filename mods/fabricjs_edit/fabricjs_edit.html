@@ -294,14 +294,7 @@
                 }
             });
 
-            /*   fabric.Image.fromURL('/assets/BikeRiders.jpg', function (img) {
-                var oImg = img.set({
-                    left: 0,
-                    top: 0
-                }).scale(0.25);
-                canvas.add(oImg);
-            });
-*/
+
             //added to transfer images
             //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
             function receiver(message) {
@@ -536,7 +529,7 @@
                 applyFilterValue(20, 'mode', this.value);
             };
             var imageElement = document.createElement('img');
-            imageElement.src = '/assets/BikeRiders.jpg';
+            imageElement.src = '/assets/Transfer-an-image.png';
             var fImage = new fabric.Image(imageElement);
             fImage.scaleX = 1;
             fImage.scaleY = 1;
