@@ -1,4 +1,4 @@
-# OpenArtMix
+# Open Art Mix
 A art scripting platform that passes canvases from one image modifier to another to enable compound effects.  A great way to experience the variety and innovation of art stripting and generative art.  
 
 Try it out at [OpenArtMix.com](https://www.openartmix.com).
