@@ -15,9 +15,9 @@ If you have a script that you would like to contribute the basic steps are:
 ```
                 function receiver(message) {
                 //do something here when a new image has been set in the frameCanvasIn.
-
-//let the parent window know to update the size of the frame
+                    xxxxxxxxxx
+                //let the parent window know to update the size of the frame
                 parent.postMessage('updateSize');
             }
 ```
-3.  The last step is to make an entry in the mods.json file including the name, path and attribution of your modifer.            
+3.  Make an entry in the mods.json file including the name, path and attribution of your modifer.            
