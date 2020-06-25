@@ -8,7 +8,7 @@ Open Art Mix is set up with independent modifiers that are stand alone html and 
 
 These modifiers (aka Widgets) can be added in a chain, passing the modified canvases building up the effects.
 
-#Contributing to Open Art Mix
+##Contributing to Open Art Mix
 If you have a script that you would like to contribute the basic steps are:
 1. Set up your script to acccept a input canvas (frameCanvasIn) and present an output canvas (canvasFrameOut).
 2. The script should respond to a update message from its parent window:
