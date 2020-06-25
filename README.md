@@ -11,7 +11,11 @@ These modifiers (aka Widgets) can be added in a chain, passing the modified canv
 ## Contributing to Open Art Mix
 If you have a script that you would like to contribute the basic steps are:
 1. Set up your script to acccept a input canvas (frameCanvasIn) and present an output canvas (canvasFrameOut).
-2. The script should respond to a update message from its parent window:
+2.  Add an event listen for messages from the parent window
+
+```  window.addEventListener("message", receiver, false);```
+
+3. Add a function to update the canvas and resize the window when a new canvas image is received:
 ```
                 function receiver(message) {
                 //do something here when a new image has been set in the frameCanvasIn.
