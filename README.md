@@ -3,7 +3,7 @@ A art scripting platform that passes canvases from one image modifier to another
 
 Try it out at [OpenArtMix.com](https://www.openartmix.com).
 
-#How does it work?
+## How does it work?
 Open Art Mix is set up with independent modifiers that are stand alone html and javascript files.  Each one will have a frameCanvasIn to receive a canvas from the previous modifier and a frameCanvasOut to pass the modified image out.  This is set in an iframe that is dynamically added to the main index page.  When a transfer occurs the main page will take the canvas from the transfering iframe and copy it to the subsequent iframe.
 
 These modifiers (aka Widgets) can be added in a chain, passing the modified canvases building up the effects.
