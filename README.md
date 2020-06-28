@@ -11,7 +11,7 @@ These modifiers (aka Widgets) can be added in a chain, passing the modified canv
 ## Contributing to Open Art Mix
 If you have a script that you would like to contribute the basic steps are:
 1. Set up your script to acccept a input canvas (frameCanvasIn) and present an output canvas (canvasFrameOut).
-2.  Add an event listen for messages from the parent window
+2.  Add an event to listen for messages from the parent window:
 
 ```  window.addEventListener("message", receiver, false);```
 
@@ -24,4 +24,4 @@ If you have a script that you would like to contribute the basic steps are:
                 parent.postMessage('updateSize');
             }
 ```
-3.  Make an entry in the mods.json file including the name, path and attribution of your modifer.            
+4.  Make an entry in the mods.json file including the name, path and attribution of your modifer.            
