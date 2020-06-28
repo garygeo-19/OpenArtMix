@@ -7,20 +7,17 @@ var result;
 var w = 640,
     h = 480;
 
+function preload() {
+    img = loadImage("Transfer-an-Image.png");
+    refreshNeeded = false;
+}
+
 function setup() {
-    capture = createCapture({
-        audio: false,
-        video: {
-            width: w,
-            height: h
-        }
-    }, function() {
-        console.log('capture ready.')
-    });
-    capture.elt.setAttribute('playsinline', '');
-    createCanvas(w, h);
-    capture.size(w, h);
-    capture.hide();
+
+
+    cnv = createCanvas(500, 500);
+    cnv.id('frameCanvasOut');
+    parent.postMessage('updateSize');
     buffer = new jsfeat.matrix_t(w, h, jsfeat.U8C1_t);
 }
 
@@ -44,8 +41,8 @@ function jsfeatToP5(src, dst) {
 }
 
 function draw() {
-    image(capture, 0, 0, 640, 480);
-    capture.loadPixels();
+    image(cnv, 0, 0);
+    cnv.loadPixels();
     if (capture.pixels.length > 0) { // don't forget this!
         var blurSize = select('#blurSize').elt.value;
         var lowThreshold = select('#lowThreshold').elt.value;
@@ -60,9 +57,9 @@ function draw() {
         jsfeat.imgproc.canny(buffer, buffer, lowThreshold, highThreshold);
         var n = buffer.rows * buffer.cols;
         // uncomment the following lines to invert the image
-       // for (var i = 0; i < n; i++) {
-       //     buffer.data[i] = 255 - buffer.data[i];
-       // }
+        // for (var i = 0; i < n; i++) {
+        //     buffer.data[i] = 255 - buffer.data[i];
+        // }
         result = jsfeatToP5(buffer, result);
         image(result, 0, 0, 640, 480);
     }
