@@ -108,6 +108,17 @@
         "type": "modify",
         "canvas_in": true,
         "canvas_out": true
+    },
+    "10": {
+        "id": 10,
+        "name": "edge_detection",
+        "display_name": "Edge Detection",
+        "location": "/mods/edge_detection/edge_detection.html",
+        "tool_tip": null,
+        "details": "Simply make adjustments to increase or decrease the edge detection sensitivity.  <BR><BR>This is based on Edge Detection in JSFEAT Computer Vision libary example from Kyle McDonald: https://editor.p5js.org/kylemcdonald/sketches/HJXWJv9nX",
+        "type": "modify",
+        "canvas_in": true,
+        "canvas_out": true
     }
 
 }

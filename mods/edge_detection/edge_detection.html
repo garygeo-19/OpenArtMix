@@ -14,6 +14,7 @@
         //This function is called whenever the window receives a message event, the message object is passed in as it's only parameter
         window.addEventListener("message", receiver, false);
         var refreshNeeded;
+        var settingsChanged; //so I can pass execute the draw funcion only on a change.
 
         function receiver(message) {
             console.log("Message Received");
@@ -24,10 +25,11 @@
 </head>
 
 <body>
-    <p>Blur Size: <input type="range" id="blurSize" value="50"></p>
-    <p>Low Threshold: <input type="range" id="lowThreshold" value="15"></p>
-    <p>High Threshold: <input type="range" id="highThreshold" value="25"></p>
-    <script src="sketch.js"></script>
+    <p>Blur Size: <input type="range" id="blurSize" value="50" onchange="settingsChanged=true;"></p>
+    <p>Low Threshold: <input type="range" id="lowThreshold" value="15" onchange="settingsChanged=true;"></p>
+    <p>High Threshold: <input type="range" id="highThreshold" value="25" onchange="settingsChanged=true;"></p>
+    <p>Invert: <input type="checkbox" id="invertCheck" onchange="settingsChanged=true;"></p>
+    <script src="edge_detection.js"></script>
 
     <canvas id="frameCanvasIn" width="500" height="500" style='display:none'>
 </body>
