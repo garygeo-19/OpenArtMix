@@ -18,7 +18,10 @@
 
         function receiver(message) {
             console.log("Message Received");
-            refreshNeeded = true;
+            setTimeout(() => { //waiting for canvas to load
+                refreshNeeded = true;
+            }, 1); //should try to remove this.
+
             parent.postMessage('updateSize');
         }
     </script>
@@ -31,7 +34,7 @@
     <p>Invert: <input type="checkbox" id="invertCheck" onchange="settingsChanged=true;"></p>
     <script src="edge_detection.js"></script>
 
-    <canvas id="frameCanvasIn" width="500" height="500" style='display:none'>
+    <canvas id="frameCanvasIn" style='display:none'>
 </body>
 
 </html>

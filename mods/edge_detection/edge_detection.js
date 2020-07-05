@@ -25,9 +25,9 @@ function setup() {
     // console.log(h);
     cnv = createCanvas(w, h);
     cnv.id('frameCanvasOut');
-    // parent.postMessage('updateSize');
+    parent.postMessage('updateSize');
     buffer = new jsfeat.matrix_t(w, h, jsfeat.U8C1_t);
-    parent.settingsChanged = true; //setting for the first execution
+    settingsChanged = true; //setting for the first execution
 }
 
 function jsfeatToP5(src, dst) {
@@ -54,7 +54,7 @@ function draw() {
     if (refreshNeeded) { //look for a image transfer
         loadCanvasImage();
     }
-    if (parent.settingsChanged) {
+    if (settingsChanged || refreshNeeded) {
         console.log("settings changed")
         image(img, 0, 0, w, h);
         img.loadPixels();
@@ -82,7 +82,7 @@ function draw() {
             result = jsfeatToP5(buffer, result);
             image(result, 0, 0, w, h);
         }
-        parent.settingsChanged = false;
+        settingsChanged = false;
     }
 }
 
@@ -94,8 +94,11 @@ function loadCanvasImage() {
     cnv.id('frameCanvasOut');
     loadImage(importCanvas.toDataURL('image/png'), function (loadedImage) {
         img = loadedImage;
+        img.resize(500, 0);
+        w = img.width;
+        h = img.height;
         console.log("loadCanvas Ended");
-        parent.settingsChanged = true;
+        settingsChanged = true;
         refreshNeeded = false;
         parent.postMessage('updateSize');
     });

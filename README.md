@@ -20,7 +20,7 @@ If you have a script that you would like to contribute the basic steps are:
                 function receiver(message) {
                 //do something here when a new image has been set in the frameCanvasIn.
                     xxxxxxxxxx
-                //let the parent window know to update the size of the frame
+                //let the parent window know to update the size of the frame contents:
                 parent.postMessage('updateSize');
             }
 ```
